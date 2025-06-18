@@ -1,0 +1,116 @@
+package org.example.provider.services.impl;
+
+import org.example.provider.dao.PlaceDAO;
+import org.example.provider.dao.PlaceImageDAO;
+import org.example.provider.dao.UserDAO;
+import org.example.provider.entity.Place;
+import org.example.provider.entity.User;
+import org.example.provider.services.PlaceService;
+
+import javax.jws.WebService;
+import java.util.ArrayList;
+import java.util.List;
+
+@WebService(endpointInterface = "org.example.provider.services.PlaceService")
+public class PlaceServiceImpl implements PlaceService {
+
+    private PlaceDAO placeDAO = new PlaceDAO();
+    private PlaceImageDAO imageDAO = new PlaceImageDAO();
+    private UserDAO userDAO = new UserDAO();
+
+    @Override
+    public List<Place> searchPlaces(String keyword) {
+        try {
+            if (keyword == null || keyword.trim().isEmpty()) {
+                return new ArrayList<>();
+            }
+            return placeDAO.searchPlaces(keyword);
+        } catch (Exception e) {
+            System.err.println("Database error in searchPlaces: " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public boolean addPlace(Place place, int userId) {
+        try {
+            // Verify user is a guide
+            User user = userDAO.findById(userId);
+            if (user == null || !"GUIDE".equals(user.getUserType())) {
+                return false;
+            }
+
+            place.setGuideId(userId);
+            return placeDAO.addPlace(place);
+        } catch (Exception e) {
+            System.err.println("Database error in addPlace: " + e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updatePlace(int placeId, Place place, int userId) {
+        try {
+            Place existingPlace = placeDAO.findById(placeId);
+            if (existingPlace == null) {
+                return false;
+            }
+
+            // Check if user is the owner guide
+            if (existingPlace.getGuideId() != userId) {
+                return false;
+            }
+
+            place.setPlaceId(placeId);
+            return placeDAO.updatePlace(place);
+        } catch (Exception e) {
+            System.err.println("Database error in updatePlace: " + e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deletePlace(int placeId, int userId) {
+        try {
+            Place place = placeDAO.findById(placeId);
+            if (place == null) {
+                return false;
+            }
+
+            // Check if user is the owner guide
+            if (place.getGuideId() != userId) {
+                return false;
+            }
+
+            return placeDAO.deletePlace(placeId);
+        } catch (Exception e) {
+            System.err.println("Database error in deletePlace: " + e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public Place getPlace(int placeId) {
+        try {
+            Place place = placeDAO.findById(placeId);
+            if (place != null) {
+                // Load images and information
+                place.setImages(imageDAO.getImagesByPlace(placeId));
+            }
+            return place;
+        } catch (Exception e) {
+            System.err.println("Database error in getPlace: " + e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public List<Place> getPlacesByGuide(int guideId) {
+        try {
+            return placeDAO.getPlacesByGuide(guideId);
+        } catch (Exception e) {
+            System.err.println("Database error in getPlacesByGuide: " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+}
