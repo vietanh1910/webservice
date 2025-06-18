@@ -252,4 +252,50 @@ public class UserDAO {
             }
         }
     }
+
+    public User findByUsernameAndPassword(String username, String password) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            String hql = "FROM User u WHERE u.username = :username AND u.password = :password AND u.isActived = true AND u.isDeleted = false";
+            Query<User> query = session.createQuery(hql, User.class);
+            query.setParameter("username", username);
+            query.setParameter("password", password);
+            return query.uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    public boolean insert(User user) {
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+
+            // Set default values
+            user.setActived(true);
+            user.setDeleted(false);
+
+            session.save(user);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
 }
