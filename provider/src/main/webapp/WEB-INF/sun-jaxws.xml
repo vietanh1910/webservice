@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<endpoints xmlns='http://java.sun.com/xml/ns/jax-ws/ri/runtime' version='2.0'>
-    <endpoint
-            name="AuthService"
-            implementation="org.example.provider.services.impl.AuthServiceImpl"
-            url-pattern="/auth" />
+<endpoints xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime" version="2.0">
+    <endpoint name="PlaceService"
+              implementation="org.example.provider.services.impl.PlaceServiceImpl"
+              url-pattern="/services/places"/>
+    <endpoint name="ImageService"
+              implementation="org.example.provider.services.impl.ImageServiceImpl"
+              url-pattern="/services/images"/>
+    <endpoint name="RatingService"
+              implementation="org.example.provider.services.impl.RatingServiceImpl"
+              url-pattern="/services/ratings"/>
+    <endpoint name="CommentService"
+              implementation="org.example.provider.services.impl.CommentServiceImpl"
+              url-pattern="/services/comments"/>
 </endpoints>

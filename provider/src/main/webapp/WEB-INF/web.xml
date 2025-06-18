@@ -3,4 +3,55 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+
+    <servlet>
+        <servlet-name>PlaceService</servlet-name>
+        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PlaceService</servlet-name>
+        <url-pattern>/services/places</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ImageService</servlet-name>
+        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ImageService</servlet-name>
+        <url-pattern>/services/images</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RatingService</servlet-name>
+        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RatingService</servlet-name>
+        <url-pattern>/services/ratings</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CommentService</servlet-name>
+        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CommentService</servlet-name>
+        <url-pattern>/services/comments</url-pattern>
+    </servlet-mapping>
+
+    <!-- Add this listener for JAX-WS -->
+    <listener>
+        <listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
+    </listener>
+
+    <!-- Optional: Add this for better configuration -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/sun-jaxws.xml</param-value>
+    </context-param>
 </web-app>
