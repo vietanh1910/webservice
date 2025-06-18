@@ -6,7 +6,7 @@ import org.example.provider.services.TravellerService;
 import java.util.List;
 import javax.jws.WebService;
 
-@WebService(endpointInterface = "org.example.provider.services.TravellerService")
+@WebService(endpointInterface = "com.travelservice.webservice.TravellerService")
 public class TravellerServiceImpl implements TravellerService {
 
     private UserDAO userDAO = new UserDAO();
@@ -99,7 +99,7 @@ public class TravellerServiceImpl implements TravellerService {
             }
 
             Rating ratingObj = new Rating(userId, targetId, rating);
-            return ratingDAO.addRating(ratingObj);
+            return ratingDAO.insertRating(ratingObj);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -110,7 +110,7 @@ public class TravellerServiceImpl implements TravellerService {
     public boolean addComment(int userId, int targetId, String commentText) {
         try {
             Comment comment = new Comment(userId, targetId, commentText);
-            return commentDAO.addComment(comment);
+            return commentDAO.insertComment(comment);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
