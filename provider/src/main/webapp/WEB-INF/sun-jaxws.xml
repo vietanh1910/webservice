@@ -12,4 +12,8 @@
     <endpoint name="CommentService"
               implementation="org.example.provider.services.impl.CommentServiceImpl"
               url-pattern="/services/comments"/>
+    <endpoint
+            name="TravellerService"
+            implementation="org.example.provider.services.impl.TravellerServiceImpl"
+            url-pattern="/services/traveller"/>
 </endpoints>

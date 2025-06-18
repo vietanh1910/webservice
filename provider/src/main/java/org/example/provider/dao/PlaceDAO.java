@@ -1,6 +1,6 @@
 package org.example.provider.dao;
 
-import org.example.provider.entity.Place;
+import org.example.provider.entity.*;
 import org.example.provider.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -205,6 +205,42 @@ public class PlaceDAO {
             }
         }
         return count != null ? count : 0L;
+    }
+
+    public List<PlaceImage> getPlaceImages(int placeId) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            String hql = "FROM PlaceImage pi WHERE pi.placeId = :placeId AND pi.isDeleted = false";
+            Query<PlaceImage> query = session.createQuery(hql, PlaceImage.class);
+            query.setParameter("placeId", placeId);
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    public List<PlaceInformation> getPlaceInformation(int placeId) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            String hql = "FROM PlaceInformation pi WHERE pi.placeId = :placeId AND pi.isDeleted = false";
+            Query<PlaceInformation> query = session.createQuery(hql, PlaceInformation.class);
+            query.setParameter("placeId", placeId);
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
     }
 }
 
