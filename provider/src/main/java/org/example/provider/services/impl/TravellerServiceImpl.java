@@ -6,7 +6,7 @@ import org.example.provider.services.TravellerService;
 import java.util.List;
 import javax.jws.WebService;
 
-@WebService(endpointInterface = "com.travelservice.webservice.TravellerService")
+@WebService(endpointInterface = "org.example.provider.services.TravellerService")
 public class TravellerServiceImpl implements TravellerService {
 
     private UserDAO userDAO = new UserDAO();
