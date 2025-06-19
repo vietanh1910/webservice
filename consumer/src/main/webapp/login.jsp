@@ -81,12 +81,8 @@
             <div class="text-red-500 text-sm mt-2 mb-4">${error}</div>
         </c:if>
 
-        <!-- Remember & Forgot -->
+        <!-- Forgot -->
         <div class="flex justify-between items-center mb-6">
-            <div class="flex items-center">
-                <input type="checkbox" id="remember" class="h-4 w-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
-                <label for="remember" class="ml-2 text-sm text-gray-600">Ghi nhớ đăng nhập</label>
-            </div>
             <a href="#" class="text-sm text-blue-600 hover:text-blue-800 hover:underline">Quên mật khẩu?</a>
         </div>
 

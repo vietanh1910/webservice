@@ -29,7 +29,7 @@ public class UserDAO {
         }
     }
 
-    public boolean register(User user) {
+    public boolean createUser(User user) {
         Session session = null;
         Transaction transaction = null;
         try {
@@ -127,13 +127,13 @@ public class UserDAO {
         }
     }
 
-    public List<User> findUsersByType(User.UserType userType) {
+    public List<User> findUsersByType(Integer role) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            String hql = "FROM User u WHERE u.userType = :userType AND u.isActived = true AND u.isDeleted = false";
+            String hql = "FROM User u WHERE u.role = :role AND u.isActived = true AND u.isDeleted = false";
             Query<User> query = session.createQuery(hql, User.class);
-            query.setParameter("userType", userType);
+            query.setParameter("role", role);
 
             return query.list();
         } catch (Exception e) {
@@ -290,6 +290,50 @@ public class UserDAO {
             if (transaction != null) {
                 transaction.rollback();
             }
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    public boolean existsByUsername(String username) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+
+            Long count = (Long) session.createQuery(
+                            "SELECT COUNT(u.userId) FROM User u WHERE u.username = :username AND u.isDeleted = false AND u.isActived = true"
+                    )
+                    .setParameter("username", username)
+                    .uniqueResult();
+
+            return count != null && count > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    public boolean existsByEmail(String email) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+
+            Long count = (Long) session.createQuery(
+                            "SELECT COUNT(u.userId) FROM User u WHERE u.email = :email AND u.isDeleted = false AND u.isActived = true"
+                    )
+                    .setParameter("email", email)
+                    .uniqueResult();
+
+            return count != null && count > 0;
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         } finally {
