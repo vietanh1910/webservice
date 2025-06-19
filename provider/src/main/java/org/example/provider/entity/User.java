@@ -28,9 +28,8 @@ public class User {
     @Column(name = "full_name", nullable = false, length = 100)
     private String fullName;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "user_type", nullable = false, length = 20)
-    private UserType userType; // TRAVELER, GUIDE
+    @Column(name = "role", nullable = false, length = 20)
+    private Integer role;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -44,12 +43,12 @@ public class User {
     // Constructors
     public User() {}
 
-    public User(String username, String email, String password, String fullName, UserType userType) {
+    public User(String username, String email, String password, String fullName, Integer userType) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.fullName = fullName;
-        this.userType = userType;
+        this.role = role;
         this.isActived = true;
         this.isDeleted = false;
     }
@@ -100,12 +99,12 @@ public class User {
         this.fullName = fullName;
     }
 
-    public UserType getUserType() {
-        return userType;
+    public Integer getRole() {
+        return role;
     }
 
-    public void setUserType(UserType userType) {
-        this.userType = userType;
+    public void setRole(Integer role) {
+        this.role = role;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -132,9 +131,5 @@ public class User {
         isDeleted = deleted;
     }
 
-    public enum UserType {
-        TRAVELER,
-        GUIDE
-    }
 }
 
