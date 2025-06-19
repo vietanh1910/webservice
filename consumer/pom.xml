@@ -63,13 +63,9 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <!-- Thư mục để lưu trữ các file .java được sinh ra -->
-                    <sourceDestDir>${project.build.directory}/generated-sources/wsimport</sourceDestDir>
-                    <!-- Package cho các lớp được sinh ra -->
-                    <packageName>com.mycompany.client.generated</packageName>
-                    <!-- Danh sách các URL WSDL -->
+                    <sourceDestDir>${project.build.directory}/generated-sources</sourceDestDir>
+                    <packageName>org.example.client.generated</packageName>
                     <wsdlUrls>
-                        <!-- !!! THAY THẾ BẰNG URL WSDL CỦA BẠN !!! -->
                         <wsdlUrl>http://localhost:8080/auth?wsdl</wsdlUrl>
                     </wsdlUrls>
                     <keep>true</keep>

@@ -1,7 +1,8 @@
 package org.example.consumer.controller;
 
-import com.mycompany.client.generated.AuthService;
-import com.mycompany.client.generated.AuthServiceImplService;
+import org.example.client.generated.AuthService;
+import org.example.client.generated.AuthServiceImplService;
+import org.example.client.generated.LoginRequestDTO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +15,14 @@ import java.io.IOException;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
+    private AuthService authService;
+
+    @Override
+    public void init() throws ServletException {
+        AuthServiceImplService service = new AuthServiceImplService();
+        authService = service.getAuthServiceImplPort();
+    }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -21,25 +30,37 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        AuthServiceImplService service = new AuthServiceImplService();
-        AuthService auth = service.getAuthServiceImplPort();
+        if (username == null || password == null || username.isEmpty() || password.isEmpty()) {
+            request.setAttribute("error", "Vui lòng nhập đầy đủ thông tin.");
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
+            return;
+        }
 
-        String token = auth.login(username, password);
+        LoginRequestDTO dto = new LoginRequestDTO();
+        dto.setUsername(username);
+        dto.setPassword(password);
 
-        if ("INVALID_CREDENTIALS".equals(token)) {
-            request.setAttribute("error", "Sai tên đăng nhập hoặc mật khẩu");
+        String result;
+        try {
+            result = authService.login(dto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("error", "Lỗi hệ thống, vui lòng thử lại sau.");
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
+            return;
+        }
+
+        if ("INVALID_CREDENTIALS".equals(result)) {
+            request.setAttribute("error", "Sai tên đăng nhập hoặc mật khẩu.");
             request.getRequestDispatcher("/login.jsp").forward(request, response);
         } else {
-            // Lưu token vào session để dùng sau
             HttpSession session = request.getSession();
-            session.setAttribute("token", token);
-
-            // Chuyển đến trang chính
+            session.setAttribute("token", result);  // result là JWT
+            session.setAttribute("username", username);
             response.sendRedirect("home.jsp");
         }
     }
 
-    // GET để hiển thị form lần đầu
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

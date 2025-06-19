@@ -16,4 +16,7 @@
             name="TravellerService"
             implementation="org.example.provider.services.impl.TravellerServiceImpl"
             url-pattern="/services/traveller"/>
+    <endpoint name="AuthService"
+              implementation="org.example.provider.services.impl.AuthServiceImpl"
+              url-pattern="/auth"/>
 </endpoints>
