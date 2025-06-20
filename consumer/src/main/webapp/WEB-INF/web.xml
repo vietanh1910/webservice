@@ -6,7 +6,7 @@
     <!-- Authentication filter -->
     <filter>
         <filter-name>AuthenticationFilter</filter-name>
-        <filter-class>com.travel.filter.AuthenticationFilter</filter-class>
+        <filter-class>org.example.consumer.filter.AuthenticationFilter</filter-class>
     </filter>
 
     <filter-mapping>
