@@ -3,6 +3,7 @@ package org.example.consumer.controller;
 import org.example.client.generated.AuthService;
 import org.example.client.generated.AuthServiceImplService;
 import org.example.client.generated.LoginRequestDTO;
+import org.example.client.generated.UserDTO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,7 +41,7 @@ public class LoginServlet extends HttpServlet {
         dto.setUsername(username);
         dto.setPassword(password);
 
-        String result;
+        UserDTO result;
         try {
             result = authService.login(dto);
         } catch (Exception e) {
@@ -50,14 +51,14 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
+
         if ("INVALID_CREDENTIALS".equals(result)) {
             request.setAttribute("error", "Sai tên đăng nhập hoặc mật khẩu.");
             request.getRequestDispatcher("/login.jsp").forward(request, response);
         } else {
             HttpSession session = request.getSession();
-            session.setAttribute("token", result);  // result là JWT
-            session.setAttribute("username", username);
-            response.sendRedirect("home.jsp");
+            session.setAttribute("user", result);
+            response.sendRedirect(request.getContextPath() + "/guide/home");
         }
     }
 

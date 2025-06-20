@@ -11,7 +11,7 @@ import java.util.List;
 public interface CommentService {
 
     @WebMethod
-    boolean addComment(@WebParam(name = "placeId") int placeId,
+    boolean addComment(@WebParam(name = "targetId") int targetId,
                        @WebParam(name = "comment") Comment comment,
                        @WebParam(name = "userId") int userId);
 

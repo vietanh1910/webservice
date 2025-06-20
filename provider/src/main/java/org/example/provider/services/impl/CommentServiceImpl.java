@@ -14,10 +14,10 @@ public class CommentServiceImpl implements CommentService {
     private CommentDAO commentDAO = new CommentDAO();
 
     @Override
-    public boolean addComment(int placeId, Comment comment, int userId) {
+    public boolean addComment(int targetId, Comment comment, int userId) {
         try {
             comment.setUserId(userId);
-            comment.setTargetId(placeId);
+            comment.setTargetId(targetId);
 
             return commentDAO.addComment(comment);
         } catch (Exception e) {

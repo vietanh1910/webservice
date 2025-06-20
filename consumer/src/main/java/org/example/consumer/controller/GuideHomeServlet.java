@@ -1,5 +1,7 @@
 package org.example.consumer.controller;
 
+import org.example.client.generated.*;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -7,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/guide/home")
 public class GuideHomeServlet extends HttpServlet {
@@ -16,9 +19,9 @@ public class GuideHomeServlet extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        String token = (String) session.getAttribute("token");
+        UserDTO user = (UserDTO) session.getAttribute("user");
 
-        if (token == null) {
+        if (user == null) {
             response.sendRedirect("/login.jsp");
             return;
         }
@@ -28,7 +31,7 @@ public class GuideHomeServlet extends HttpServlet {
             PlaceServiceImplService service = new PlaceServiceImplService();
             PlaceService placeService = service.getPlaceServiceImplPort();
 
-            List<Place> places = placeService.getPlacesByGuide(token);
+            List<PlaceDTO> places = placeService.getPlacesByGuide(user.getUserId());
 
             request.setAttribute("places", places);
             request.getRequestDispatcher("/WEB-INF/views/guide/home.jsp").forward(request, response);

@@ -14,7 +14,7 @@ public class RatingServiceImpl implements RatingService {
     private RatingDAO ratingDAO = new RatingDAO();
 
     @Override
-    public boolean addRating(int placeId, Rating rating, int userId) {
+    public boolean addRating(int targetId, Rating rating, int userId) {
         try {
             // Validate rating value
             if (rating.getRating() < 1 || rating.getRating() > 5) {
@@ -22,7 +22,7 @@ public class RatingServiceImpl implements RatingService {
             }
 
             rating.setUserId(userId);
-            rating.setTargetId(placeId);
+            rating.setTargetId(targetId);
 
             return ratingDAO.addRating(rating);
         } catch (Exception e) {

@@ -51,55 +51,61 @@
             <!-- Form Card -->
             <div class="card">
                 <div class="card-header">
-                    <h4><i class="fas fa-plus"></i> Add New Place</h4>
+                    <h4>
+                        <i class="fas fa-${not empty place ? 'edit' : 'plus'}"></i>
+                        ${not empty place ? 'Edit Place' : 'Add New Place'}
+                    </h4>
                 </div>
                 <div class="card-body">
                     <form method="post" enctype="multipart/form-data">
+                        <c:if test="${not empty place}">
+                            <input type="hidden" name="placeId" value="${place.placeId}" />
+                        </c:if>
                         <div class="mb-3">
-                            <label for="name" class="form-label">Place's Name *</label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                   required maxlength="255" value="${param.name}">
+                            <label for="placeName" class="form-label">Place's Name *</label>
+                            <input type="text" class="form-control" id="placeName" name="placeName"
+                                   required maxlength="255" value="${place.placeName}">
                         </div>
 
                         <div class="mb-3">
-                            <label for="location" class="form-label">Location *</label>
-                            <input type="text" class="form-control" id="location" name="location"
-                                   required maxlength="255" value="${param.location}">
+                            <label for="address" class="form-label">Location *</label>
+                            <input type="text" class="form-control" id="address" name="address"
+                                   required maxlength="255" value="${place.address}">
                             <div class="form-text">Ví dụ: Hà Nội, Việt Nam</div>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="category" class="form-label">Category *</label>
-                            <select class="form-select" id="category" name="category" required>
-                                <option value="">Chọn danh mục</option>
-                                <option value="Tourist Attraction" ${param.category == 'Tourist Attraction' ? 'selected' : ''}>
-                                    Tourist Attraction
-                                </option>
-                                <option value="Restaurant" ${param.category == 'Restaurant' ? 'selected' : ''}>
-                                    Restaurant
-                                </option>
-                                <option value="Hotel" ${param.category == 'Hotel' ? 'selected' : ''}>
-                                    Hotel
-                                </option>
-                                <option value="Shopping" ${param.category == 'Shopping' ? 'selected' : ''}>
-                                    Shopping
-                                </option>
-                                <option value="Entertainment" ${param.category == 'Entertainment' ? 'selected' : ''}>
-                                    Entertainment
-                                </option>
-                                <option value="Nature" ${param.category == 'Nature' ? 'selected' : ''}>
-                                    Nature
-                                </option>
-                                <option value="Culture" ${param.category == 'Culture' ? 'selected' : ''}>
-                                    Culture
-                                </option>
-                            </select>
-                        </div>
+<%--                        <div class="mb-3">--%>
+<%--                            <label for="category" class="form-label">Category *</label>--%>
+<%--                            <select class="form-select" id="category" name="category" required>--%>
+<%--                                <option value="">Chọn danh mục</option>--%>
+<%--                                <option value="Tourist Attraction" ${place.category == 'Tourist Attraction' ? 'selected' : ''}>--%>
+<%--                                    Tourist Attraction--%>
+<%--                                </option>--%>
+<%--                                <option value="Restaurant" ${place.category == 'Restaurant' ? 'selected' : ''}>--%>
+<%--                                    Restaurant--%>
+<%--                                </option>--%>
+<%--                                <option value="Hotel" ${place.category == 'Hotel' ? 'selected' : ''}>--%>
+<%--                                    Hotel--%>
+<%--                                </option>--%>
+<%--                                <option value="Shopping" ${place.category == 'Shopping' ? 'selected' : ''}>--%>
+<%--                                    Shopping--%>
+<%--                                </option>--%>
+<%--                                <option value="Entertainment" ${place.category == 'Entertainment' ? 'selected' : ''}>--%>
+<%--                                    Entertainment--%>
+<%--                                </option>--%>
+<%--                                <option value="Nature" ${place.category == 'Nature' ? 'selected' : ''}>--%>
+<%--                                    Nature--%>
+<%--                                </option>--%>
+<%--                                <option value="Culture" ${place.category == 'Culture' ? 'selected' : ''}>--%>
+<%--                                    Culture--%>
+<%--                                </option>--%>
+<%--                            </select>--%>
+<%--                        </div>--%>
 
                         <div class="mb-3">
                             <label for="description" class="form-label">Mô tả *</label>
                             <textarea class="form-control" id="description" name="description"
-                                      rows="4" required maxlength="1000">${param.description}</textarea>
+                                      rows="4" required maxlength="1000">${place.description}</textarea>
                             <div class="form-text">Detailed Description</div>
                         </div>
 

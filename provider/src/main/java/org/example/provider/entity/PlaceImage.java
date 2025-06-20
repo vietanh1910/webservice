@@ -20,7 +20,7 @@ public class PlaceImage {
     @JoinColumn(name = "place_id", referencedColumnName = "place_id")
     private Place place;
 
-    @Column(name = "image_url", nullable = false, length = 500)
+    @Column(name = "image_url", nullable = false, columnDefinition = "TEXT")
     private String imageUrl;
 
     @Column(name = "image_title", length = 255)

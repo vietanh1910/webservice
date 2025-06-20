@@ -1,5 +1,10 @@
 package org.example.consumer.controller;
 
+import org.example.client.generated.PlaceService;
+import org.example.client.generated.PlaceServiceImplService;
+import org.example.client.generated.User;
+import org.example.client.generated.UserDTO;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -13,20 +18,29 @@ public class DeletePlaceServlet extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        String token = (String) session.getAttribute("token");
+        UserDTO user = (UserDTO) session.getAttribute("user");
 
-        if (token == null) {
+        if (user == null) {
             response.sendRedirect("/login.jsp");
             return;
         }
 
-        String placeId = request.getParameter("placeId");
+        String exPlaceId = request.getParameter("placeId");
+        Integer placeId = null;
+        if(exPlaceId != null) {
+            try {
+                placeId = Integer.parseInt(exPlaceId);
+            } catch (NumberFormatException e) {
+                response.sendRedirect("home?error=Invalid place ID");
+                return;
+            }
+        }
 
         try {
             PlaceServiceImplService service = new PlaceServiceImplService();
             PlaceService placeService = service.getPlaceServiceImplPort();
 
-            boolean success = placeService.deletePlace(token, Long.parseLong(placeId));
+            boolean success = placeService.deletePlace(placeId, user.getUserId());
 
             if (success) {
                 response.sendRedirect("home?success=Place deleted successfully");

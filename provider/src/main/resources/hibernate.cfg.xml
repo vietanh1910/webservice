@@ -22,5 +22,12 @@
 
         <!-- Scan annotated classes -->
         <mapping class="org.example.provider.entity.User"/>
+        <mapping class="org.example.provider.entity.Role"/>
+        <mapping class="org.example.provider.entity.Rating"/>
+        <mapping class="org.example.provider.entity.PlaceInformation"/>
+        <mapping class="org.example.provider.entity.PlaceImage"/>
+        <mapping class="org.example.provider.entity.Place"/>
+        <mapping class="org.example.provider.entity.Permission"/>
+        <mapping class="org.example.provider.entity.Comment"/>
     </session-factory>
 </hibernate-configuration>

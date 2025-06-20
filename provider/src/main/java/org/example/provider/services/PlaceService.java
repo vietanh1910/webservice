@@ -1,5 +1,6 @@
 package org.example.provider.services;
 
+import org.example.provider.dto.PlaceDTO;
 import org.example.provider.entity.Place;
 import org.example.provider.entity.PlaceImage;
 
@@ -15,7 +16,7 @@ public interface PlaceService {
     List<Place> searchPlaces(@WebParam(name = "keyword") String keyword);
 
     @WebMethod
-    boolean addPlace(@WebParam(name = "place") Place place,
+    int addPlace(@WebParam(name = "place") Place place,
                      @WebParam(name = "userId") int userId);
 
     @WebMethod
@@ -31,5 +32,5 @@ public interface PlaceService {
     Place getPlace(@WebParam(name = "placeId") int placeId);
 
     @WebMethod
-    List<Place> getPlacesByGuide(@WebParam(name = "guideId") int guideId);
+    List<PlaceDTO> getPlacesByGuide(@WebParam(name = "guideId") int guideId);
 }

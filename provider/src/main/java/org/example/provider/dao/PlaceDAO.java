@@ -1,11 +1,17 @@
 package org.example.provider.dao;
 
+import org.example.provider.dto.PlaceDTO;
 import org.example.provider.entity.*;
 import org.example.provider.util.HibernateUtil;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PlaceDAO {
 
@@ -62,10 +68,18 @@ public class PlaceDAO {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
+            Place existing = session.get(Place.class, place.getPlaceId());
+            if (existing != null) {
+                existing.setPlaceId(place.getPlaceId());
+                existing.setPlaceName(place.getPlaceName());
+                existing.setDescription(place.getDescription());
+                existing.setAddress(place.getAddress());
+                existing.setUpdatedAt(LocalDateTime.now());
 
-            session.update(place);
-            transaction.commit();
-            success = true;
+                session.update(existing);
+                transaction.commit();
+                success = true;
+            }
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -118,6 +132,10 @@ public class PlaceDAO {
             Query<Place> query = session.createQuery(hql, Place.class);
             query.setParameter("placeId", placeId);
             place = query.uniqueResult();
+            if (place != null) {
+                Hibernate.initialize(place.getImages());
+                Hibernate.initialize(place.getInformation());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -128,8 +146,8 @@ public class PlaceDAO {
         return place;
     }
 
-    public List<Place> getPlacesByGuide(int guideId) {
-        List<Place> places = null;
+    public List<PlaceDTO> getPlacesByGuide(int guideId) {
+        List<PlaceDTO> result = new ArrayList<>();
         Session session = null;
 
         try {
@@ -137,7 +155,27 @@ public class PlaceDAO {
             String hql = "FROM Place p WHERE p.guideId = :guideId AND p.isDeleted = false";
             Query<Place> query = session.createQuery(hql, Place.class);
             query.setParameter("guideId", guideId);
-            places = query.getResultList();
+            List<Place> places = query.getResultList();
+
+            for (Place place : places) {
+                // Khởi tạo các quan hệ LAZY trước khi session đóng
+                Hibernate.initialize(place.getImages());
+
+                PlaceDTO dto = new PlaceDTO();
+                dto.setId(place.getPlaceId());
+                dto.setPlaceName(place.getPlaceName());
+                dto.setAddress(place.getAddress());
+                dto.setDescription(place.getDescription());
+
+                List<String> urls = place.getImages().stream()
+                        .map(PlaceImage::getImageUrl)
+                        .collect(Collectors.toList());
+
+                dto.setImageUrls(urls);
+
+                result.add(dto);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -145,7 +183,8 @@ public class PlaceDAO {
                 session.close();
             }
         }
-        return places;
+
+        return result;
     }
 
     public List<Place> getAllPlaces() {

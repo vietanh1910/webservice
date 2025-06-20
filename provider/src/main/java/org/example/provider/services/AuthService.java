@@ -13,7 +13,7 @@ import javax.jws.WebService;
 public interface AuthService {
 
     @WebMethod
-    String login(@WebParam(name = "loginRequest") LoginRequestDTO loginRequest);
+    UserDTO login(@WebParam(name = "loginRequest") LoginRequestDTO loginRequest);
 
     @WebMethod
     String register(@WebParam(name = "registerRequest") RegisterRequestDTO registerRequestDTO);

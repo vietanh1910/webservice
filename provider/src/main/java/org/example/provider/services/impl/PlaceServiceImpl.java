@@ -3,9 +3,11 @@ package org.example.provider.services.impl;
 import org.example.provider.dao.PlaceDAO;
 import org.example.provider.dao.PlaceImageDAO;
 import org.example.provider.dao.UserDAO;
+import org.example.provider.dto.PlaceDTO;
 import org.example.provider.entity.Place;
 import org.example.provider.entity.User;
 import org.example.provider.services.PlaceService;
+import org.hibernate.Hibernate;
 
 import javax.jws.WebService;
 import java.util.ArrayList;
@@ -32,19 +34,21 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
-    public boolean addPlace(Place place, int userId) {
+    public int addPlace(Place place, int userId) {
         try {
             // Verify user is a guide
             User user = userDAO.findById(userId);
-            if (user == null || !"GUIDE".equals(user.getUserType())) {
-                return false;
+            if (user == null || user.getRole() == 2) {
+                return -1; // User is not a guide
             }
 
             place.setGuideId(userId);
-            return placeDAO.addPlace(place);
+            boolean result = placeDAO.addPlace(place);
+            return result ? place.getPlaceId() : -1;
         } catch (Exception e) {
             System.err.println("Database error in addPlace: " + e.getMessage());
-            return false;
+            e.printStackTrace();
+            return -1;
         }
     }
 
@@ -93,10 +97,6 @@ public class PlaceServiceImpl implements PlaceService {
     public Place getPlace(int placeId) {
         try {
             Place place = placeDAO.findById(placeId);
-            if (place != null) {
-                // Load images and information
-                place.setImages(imageDAO.getImagesByPlace(placeId));
-            }
             return place;
         } catch (Exception e) {
             System.err.println("Database error in getPlace: " + e.getMessage());
@@ -105,7 +105,7 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
-    public List<Place> getPlacesByGuide(int guideId) {
+    public List<PlaceDTO> getPlacesByGuide(int guideId) {
         try {
             return placeDAO.getPlacesByGuide(guideId);
         } catch (Exception e) {

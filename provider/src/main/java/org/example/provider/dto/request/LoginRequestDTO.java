@@ -1,5 +1,8 @@
 package org.example.provider.dto.request;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class LoginRequestDTO {
     private String username;
     private String password;

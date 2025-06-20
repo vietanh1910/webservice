@@ -1,5 +1,7 @@
 package org.example.consumer.controller;
 
+import org.example.client.generated.*;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -7,7 +9,9 @@ import javax.servlet.http.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
 @WebServlet("/guide/edit-place")
 @MultipartConfig(maxFileSize = 16177215)
@@ -16,22 +20,25 @@ public class EditPlaceServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         HttpSession session = request.getSession();
-        String token = (String) session.getAttribute("token");
+        UserDTO user = (UserDTO) session.getAttribute("user");
 
-        if (token == null) {
+        if (user == null) {
             response.sendRedirect("/login.jsp");
             return;
         }
 
-        String placeId = request.getParameter("id");
+        String placeIdStr = request.getParameter("id");
+        Integer placeId = null;
+        if (placeIdStr != null) {
+            placeId = Integer.parseInt(placeIdStr);
+        }
 
         try {
             PlaceServiceImplService service = new PlaceServiceImplService();
             PlaceService placeService = service.getPlaceServiceImplPort();
 
-            Place place = placeService.getPlaceById(Long.parseLong(placeId), token);
+            Place place = placeService.getPlace(placeId);
 
             if (place != null) {
                 request.setAttribute("place", place);
@@ -41,6 +48,7 @@ public class EditPlaceServlet extends HttpServlet {
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             response.sendRedirect("home?error=Error loading place");
         }
     }
@@ -48,59 +56,68 @@ public class EditPlaceServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
-        String token = (String) session.getAttribute("token");
+        UserDTO user = (UserDTO) session.getAttribute("user");
 
-        if (token == null) {
+        if (user == null) {
             response.sendRedirect("/login.jsp");
             return;
         }
 
         try {
-            String placeId = request.getParameter("placeId");
-            String name = request.getParameter("name");
+            int placeId = Integer.parseInt(request.getParameter("placeId"));
+            String name = request.getParameter("placeName");
             String description = request.getParameter("description");
-            String location = request.getParameter("location");
-            String category = request.getParameter("category");
+            String address = request.getParameter("address");
 
-            // Xử lý upload hình ảnh mới (nếu có)
+            // Xử lý ảnh
             Part imagePart = request.getPart("image");
             String imageData = null;
 
             if (imagePart != null && imagePart.getSize() > 0) {
-                // Convert image to base64
                 InputStream imageStream = imagePart.getInputStream();
-
                 ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-                int nRead;
                 byte[] data = new byte[1024];
+                int nRead;
                 while ((nRead = imageStream.read(data, 0, data.length)) != -1) {
                     buffer.write(data, 0, nRead);
                 }
                 byte[] imageBytes = buffer.toByteArray();
-
                 imageData = Base64.getEncoder().encodeToString(imageBytes);
                 imageStream.close();
             }
 
+            Place place = new Place();
+            place.setPlaceId(placeId);
+            place.setPlaceName(name);
+            place.setDescription(description);
+            place.setAddress(address);
+            if (imageData != null) {
+                List<PlaceImage> images = new ArrayList<>();
+                PlaceImage img = new PlaceImage();
+                img.setImageUrl(imageData);  // hoặc field tương ứng
+                images.add(img);
+            }
+
+            // Gọi web service
             PlaceServiceImplService service = new PlaceServiceImplService();
             PlaceService placeService = service.getPlaceServiceImplPort();
 
-            boolean success = placeService.updatePlace(token, Long.parseLong(placeId),
-                    name, description, location, category, imageData);
+            boolean success = placeService.updatePlace(placeId, place, user.getUserId());
 
             if (success) {
                 response.sendRedirect("home?success=Place updated successfully");
             } else {
-                request.setAttribute("error", "Cant update place");
+                request.setAttribute("error", "Không thể cập nhật địa điểm.");
                 request.setAttribute("placeId", placeId);
                 doGet(request, response);
             }
 
         } catch (Exception e) {
-            request.setAttribute("error", "Error when update place: " + e.getMessage());
+            request.setAttribute("error", "Lỗi cập nhật địa điểm: " + e.getMessage());
             doGet(request, response);
         }
     }
+
 }

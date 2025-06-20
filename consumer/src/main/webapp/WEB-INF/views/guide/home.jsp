@@ -72,12 +72,12 @@
         <c:forEach var="place" items="${places}">
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card h-100">
-                    <c:if test="${place.imageUrl != null}">
-                        <img src="data:image/jpeg;base64,${place.imageUrl}"
-                             class="card-img-top" alt="${place.name}"
+                    <c:if test="${place.imageUrls != null}">
+                        <img src="data:image/jpeg;base64,${place.imageUrls[0]}"
+                             class="card-img-top" alt="${place.placeName}"
                              style="height: 200px; object-fit: cover;">
                     </c:if>
-                    <c:if test="${place.imageUrl == null}">
+                    <c:if test="${place.imageUrls == null}">
                         <div class="card-img-top bg-light d-flex align-items-center justify-content-center"
                              style="height: 200px;">
                             <i class="fas fa-image fa-3x text-muted"></i>
@@ -85,15 +85,14 @@
                     </c:if>
 
                     <div class="card-body">
-                        <h5 class="card-title">${place.name}</h5>
+                        <h5 class="card-title">${place.placeName}</h5>
                         <p class="card-text">
                             <small class="text-muted">
-                                <i class="fas fa-map-pin"></i> ${place.location}
+                                <i class="fas fa-map-pin"></i> ${place.address}
                             </small>
                         </p>
                         <p class="card-text">${place.description}</p>
                         <div class="d-flex justify-content-between align-items-center">
-                            <span class="badge bg-primary">${place.category}</span>
                             <small class="text-muted">
                                 <i class="fas fa-star"></i> ${place.averageRating}/5
                                 (${place.totalRatings} ratings)
@@ -110,7 +109,7 @@
                                 <i class="fas fa-images"></i> Image
                             </a>
                             <button type="button" class="btn btn-outline-danger btn-sm"
-                                    onclick="confirmDelete(${place.id}, '${place.name}')">
+                                    onclick="confirmDelete(${place.id}, '${place.placeName}')">
                                 <i class="fas fa-trash"></i> Delete
                             </button>
                         </div>

@@ -19,12 +19,19 @@ public class AuthServiceImpl implements AuthService {
     private final UserDAO userDAO = new UserDAO();
 
     @Override
-    public String login(LoginRequestDTO dto) {
+    public UserDTO login(LoginRequestDTO dto) {
         User user = userDAO.findByUsername(dto.getUsername());
         if (user == null || !BCrypt.checkpw(dto.getPassword(), user.getPassword())) {
-            return "INVALID_CREDENTIALS";
+            return null;
         }
-        return JwtUtil.generateToken(dto.getUsername());
+        String token =  JwtUtil.generateToken(dto.getUsername());
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserId(user.getUserId());
+        userDTO.setUsername(user.getUsername());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setFullName(user.getFullName());
+        userDTO.setRole(user.getRole());
+        return userDTO;
     }
 
     @Override

@@ -11,7 +11,7 @@ import java.util.List;
 public interface RatingService {
 
     @WebMethod
-    boolean addRating(@WebParam(name = "placeId") int placeId,
+    boolean addRating(@WebParam(name = "targetId") int targetId,
                       @WebParam(name = "rating") Rating rating,
                       @WebParam(name = "userId") int userId);
 
