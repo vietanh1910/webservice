@@ -1,0 +1,48 @@
+package org.example.consumer.controller;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
+import java.io.IOException;;
+
+@WebServlet("/search")
+public class SearchPlaceServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String keyword = request.getParameter("keyword");
+        String category = request.getParameter("category");
+
+        if (keyword == null || keyword.trim().isEmpty()) {
+            // Hiển thị form search
+            request.getRequestDispatcher("/search.jsp").forward(request, response);
+            return;
+        }
+
+        try {
+            // Gọi web service để tìm kiếm
+            PlaceServiceImplService service = new PlaceServiceImplService();
+            PlaceService placeService = service.getPlaceServiceImplPort();
+
+            List<Place> places = placeService.searchPlaces(keyword, category);
+
+            request.setAttribute("places", places);
+            request.setAttribute("keyword", keyword);
+            request.setAttribute("category", category);
+
+            request.getRequestDispatcher("/search-results.jsp").forward(request, response);
+
+        } catch (Exception e) {
+            request.setAttribute("error", "Search error: " + e.getMessage());
+            request.getRequestDispatcher("/search.jsp").forward(request, response);
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doGet(request, response);
+    }
+}
