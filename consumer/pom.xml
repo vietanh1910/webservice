@@ -78,6 +78,7 @@
                         <wsdlUrl>http://localhost:8080/services/images?wsdl</wsdlUrl>
                         <wsdlUrl>http://localhost:8080/services/ratings?wsdl</wsdlUrl>
                         <wsdlUrl>http://localhost:8080/services/comments?wsdl</wsdlUrl>
+                        <wsdlUrl>http://localhost:8080/place-information?wsdl</wsdlUrl>
 <!--                        <wsdlUrl>http://localhost:8080/services/traveller?wsdl</wsdlUrl>-->
                     </wsdlUrls>
                     <keep>true</keep>

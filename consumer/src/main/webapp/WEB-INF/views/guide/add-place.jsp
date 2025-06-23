@@ -485,16 +485,16 @@
                             <select class="form-select" id="category" name="category" required>
                                 <option value="">Choose a category...</option>
                                 <option value="Tourist Attraction" ${param.category == 'Tourist Attraction' ? 'selected' : ''}>
-                                    🏛️ Tourist Attraction
+                                    🏛 Tourist Attraction
                                 </option>
                                 <option value="Restaurant" ${param.category == 'Restaurant' ? 'selected' : ''}>
-                                    🍽️ Restaurant
+                                    🍽 Restaurant
                                 </option>
                                 <option value="Hotel" ${param.category == 'Hotel' ? 'selected' : ''}>
                                     🏨 Hotel
                                 </option>
                                 <option value="Shopping" ${param.category == 'Shopping' ? 'selected' : ''}>
-                                    🛍️ Shopping
+                                    🛍 Shopping
                                 </option>
                                 <option value="Entertainment" ${param.category == 'Entertainment' ? 'selected' : ''}>
                                     🎭 Entertainment
@@ -503,7 +503,7 @@
                                     🌲 Nature
                                 </option>
                                 <option value="Culture" ${param.category == 'Culture' ? 'selected' : ''}>
-                                    🏛️ Culture
+                                    🏛 Culture
                                 </option>
                             </select>
                             <div class="form-text">
@@ -528,12 +528,27 @@
                         </div>
 
                         <div class="mb-4">
+                            <label for="information" class="form-label">
+                                <i class="fas fa-align-left"></i>
+                                Detail information *
+                            </label>
+                            <textarea class="form-control" id="information" name="information"
+                                      rows="5" required maxlength="1000"
+                                      placeholder="Detail Information ... ">${param.information}</textarea>
+                            <div class="form-text">
+                                <i class="fas fa-pen"></i>
+                                Paint a vivid picture that inspires travelers to visit
+                            </div>
+                            <div class="char-counter" id="infoCounter">0/1000</div>
+                        </div>
+
+                        <div class="mb-4">
                             <label class="form-label">
                                 <i class="fas fa-camera"></i>
                                 Featured Photo
                             </label>
                             <div class="image-upload-section" onclick="document.getElementById('image').click()">
-                                <input type="file" class="form-control d-none" id="image" name="image"
+                                <input type="file" class="form-control" id="image" name="image"
                                        accept="image/*" onchange="previewImage(this)">
 
                                 <div id="uploadPlaceholder">
@@ -583,7 +598,7 @@
 
         function update() {
             const length = input.value.length;
-            counter.textContent = `${length}/${maxLength}`;
+            counter.textContent = ${length}/${maxLength};
 
             if (length > maxLength * 0.9) {
                 counter.className = 'char-counter danger';
@@ -602,6 +617,7 @@
     updateCharCounter('name', 'nameCounter', 255);
     updateCharCounter('location', 'locationCounter', 255);
     updateCharCounter('description', 'descCounter', 1000);
+    updateCharCounter('information', 'infoCounter', 1000);
 
     // Image preview function
     function previewImage(input) {

@@ -13,11 +13,8 @@ public class PlaceInformation {
     @Column(name = "info_id")
     private int infoId;
 
-    @Column(name = "place_id", insertable = false, updatable = false)
-    private int placeId;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "place_id", referencedColumnName = "place_id")
+    @OneToOne
+    @JoinColumn(name = "place_id")
     private Place place;
 
     @Column(name = "title", nullable = false, length = 255)
@@ -41,8 +38,8 @@ public class PlaceInformation {
     // Constructors
     public PlaceInformation() {}
 
-    public PlaceInformation(int placeId, String title, String content, int createdBy) {
-        this.placeId = placeId;
+    public PlaceInformation(Place place, String title, String content, int createdBy) {
+        this.place = place;
         this.title = title;
         this.content = content;
         this.createdBy = createdBy;
@@ -63,9 +60,6 @@ public class PlaceInformation {
     // Getters and Setters
     public int getInfoId() { return infoId; }
     public void setInfoId(int infoId) { this.infoId = infoId; }
-
-    public int getPlaceId() { return placeId; }
-    public void setPlaceId(int placeId) { this.placeId = placeId; }
 
     public Place getPlace() { return place; }
     public void setPlace(Place place) { this.place = place; }

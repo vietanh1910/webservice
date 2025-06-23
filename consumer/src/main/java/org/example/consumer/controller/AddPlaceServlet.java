@@ -50,6 +50,7 @@ public class AddPlaceServlet extends HttpServlet {
             String name = request.getParameter("name");
             String description = request.getParameter("description");
             String location = request.getParameter("location");
+            String information = request.getParameter("information");
 
             // Xử lý ảnh upload
             Part imagePart = request.getPart("image");
@@ -87,6 +88,9 @@ public class AddPlaceServlet extends HttpServlet {
             ImageServiceImplService imageService = new ImageServiceImplService();
             ImageService imageServicePort = imageService.getImageServiceImplPort();
 
+            PlaceInformationServiceImplService infoService = new PlaceInformationServiceImplService();
+            PlaceInformationService placeInformationService = infoService.getPlaceInformationServiceImplPort();
+
             int placeId = placeService.addPlace(place, user.getUserId());
             if (placeId <= 0) {
                 request.setAttribute("error", "Không thể thêm địa điểm.");
@@ -103,8 +107,16 @@ public class AddPlaceServlet extends HttpServlet {
                 successImage = imageServicePort.addImage(placeId, placeImage, user.getUserId());
             }
 
+            boolean successInformation = true;
+            if (information != null) {
+                PlaceInformation placeInformation = new PlaceInformation();
+                placeInformation.setContent(information);
+                placeInformation.setCreatedBy(user.getUserId());
+                successInformation = placeInformationService.addInformation(placeId, placeInformation, user.getUserId());
+            }
+
             // Điều hướng theo kết quả
-            if (successImage) {
+            if (successImage && successInformation) {
                 response.sendRedirect("home?success=Place added successfully");
             } else {
                 request.setAttribute("error", "Thêm địa điểm thành công nhưng lỗi khi lưu ảnh.");

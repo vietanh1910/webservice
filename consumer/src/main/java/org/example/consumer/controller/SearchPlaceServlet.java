@@ -1,6 +1,7 @@
 package org.example.consumer.controller;
 
 import org.example.client.generated.Place;
+import org.example.client.generated.PlaceDTO;
 import org.example.client.generated.PlaceService;
 import org.example.client.generated.PlaceServiceImplService;
 
@@ -33,7 +34,7 @@ public class SearchPlaceServlet extends HttpServlet {
             PlaceServiceImplService service = new PlaceServiceImplService();
             PlaceService placeService = service.getPlaceServiceImplPort();
 
-            List<Place> places = placeService.searchPlaces(keyword);
+            List<PlaceDTO> places = placeService.searchPlaces(keyword);
 
             request.setAttribute("places", places);
             request.setAttribute("keyword", keyword);

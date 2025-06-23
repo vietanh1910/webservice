@@ -44,16 +44,16 @@
         <url-pattern>/services/comments</url-pattern>
     </servlet-mapping>
 
-<!--    <servlet>-->
-<!--        <servlet-name>TravellerServiceServlet</servlet-name>-->
-<!--        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>-->
-<!--        <load-on-startup>1</load-on-startup>-->
-<!--    </servlet>-->
+    <!--    <servlet>-->
+    <!--        <servlet-name>TravellerServiceServlet</servlet-name>-->
+    <!--        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>-->
+    <!--        <load-on-startup>1</load-on-startup>-->
+    <!--    </servlet>-->
 
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>TravellerServiceServlet</servlet-name>-->
-<!--        <url-pattern>/services/traveller</url-pattern>-->
-<!--    </servlet-mapping>-->
+    <!--    <servlet-mapping>-->
+    <!--        <servlet-name>TravellerServiceServlet</servlet-name>-->
+    <!--        <url-pattern>/services/traveller</url-pattern>-->
+    <!--    </servlet-mapping>-->
 
     <servlet>
         <servlet-name>AuthService</servlet-name>
@@ -63,6 +63,16 @@
     <servlet-mapping>
         <servlet-name>AuthService</servlet-name>
         <url-pattern>/auth</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PlaceInformationService</servlet-name>
+        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PlaceInformationService</servlet-name>
+        <url-pattern>/place-information</url-pattern>
     </servlet-mapping>
 
 

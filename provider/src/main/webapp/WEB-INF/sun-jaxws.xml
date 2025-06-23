@@ -12,10 +12,13 @@
     <endpoint name="CommentService"
               implementation="org.example.provider.services.impl.CommentServiceImpl"
               url-pattern="/services/comments"/>
-<!--    <endpoint name="TravellerService"-->
-<!--            implementation="org.example.provider.services.impl.TravellerServiceImpl"-->
-<!--            url-pattern="/services/traveller"/>-->
+    <!--    <endpoint name="TravellerService"-->
+    <!--            implementation="org.example.provider.services.impl.TravellerServiceImpl"-->
+    <!--            url-pattern="/services/traveller"/>-->
     <endpoint name="AuthService"
               implementation="org.example.provider.services.impl.AuthServiceImpl"
               url-pattern="/auth"/>
+    <endpoint name="PlaceInformationService"
+              implementation="org.example.provider.services.impl.PlaceInformationServiceImpl"
+              url-pattern="/place-information"/>
 </endpoints>

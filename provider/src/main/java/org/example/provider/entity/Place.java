@@ -45,8 +45,8 @@ public class Place {
     @OneToMany(mappedBy = "place", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PlaceImage> images;
 
-    @OneToMany(mappedBy = "place", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<PlaceInformation> information;
+    @OneToOne(mappedBy = "place", cascade = CascadeType.ALL)
+    private PlaceInformation information;
 
     // Constructors
     public Place() {}
@@ -106,7 +106,6 @@ public class Place {
     public List<PlaceImage> getImages() { return images; }
     public void setImages(List<PlaceImage> images) { this.images = images; }
 
-    public List<PlaceInformation> getInformation() { return information; }
-    public void setInformation(List<PlaceInformation> information) { this.information = information; }
+    public PlaceInformation getInformation() { return information; }
+    public void setInformation(PlaceInformation information) { this.information = information; }
 }
-

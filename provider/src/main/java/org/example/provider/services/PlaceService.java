@@ -13,11 +13,11 @@ import java.util.List;
 public interface PlaceService {
 
     @WebMethod
-    List<Place> searchPlaces(@WebParam(name = "keyword") String keyword);
+    List<PlaceDTO> searchPlaces(@WebParam(name = "keyword") String keyword);
 
     @WebMethod
     int addPlace(@WebParam(name = "place") Place place,
-                     @WebParam(name = "userId") int userId);
+                 @WebParam(name = "userId") int userId);
 
     @WebMethod
     boolean updatePlace(@WebParam(name = "placeId") int placeId,
