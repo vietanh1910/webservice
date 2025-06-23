@@ -29,7 +29,7 @@ public class ImageServiceImpl implements ImageService {
                 return false;
             }
 
-            image.setPlaceId(placeId);
+            image.setPlace(place);
             image.setUploadedBy(userId);
 
             return imageDAO.addImage(image);

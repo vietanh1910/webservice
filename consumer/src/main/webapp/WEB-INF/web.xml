@@ -12,6 +12,5 @@
     <filter-mapping>
         <filter-name>AuthenticationFilter</filter-name>
         <url-pattern>/rating</url-pattern>
-        <url-pattern>/profile</url-pattern>
     </filter-mapping>
 </web-app>

@@ -13,11 +13,8 @@ public class PlaceImage {
     @Column(name = "image_id")
     private int imageId;
 
-    @Column(name = "place_id", insertable = false, updatable = false)
-    private int placeId;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "place_id", referencedColumnName = "place_id")
+    @JoinColumn(name = "place_id", nullable = false)
     private Place place;
 
     @Column(name = "image_url", nullable = false, columnDefinition = "TEXT")
@@ -41,8 +38,8 @@ public class PlaceImage {
     // Constructors
     public PlaceImage() {}
 
-    public PlaceImage(int placeId, String imageUrl, String imageTitle, String description, int uploadedBy) {
-        this.placeId = placeId;
+    public PlaceImage(Place placeId, String imageUrl, String imageTitle, String description, int uploadedBy) {
+        this.place = place;
         this.imageUrl = imageUrl;
         this.imageTitle = imageTitle;
         this.description = description;
@@ -58,9 +55,6 @@ public class PlaceImage {
     // Getters and Setters
     public int getImageId() { return imageId; }
     public void setImageId(int imageId) { this.imageId = imageId; }
-
-    public int getPlaceId() { return placeId; }
-    public void setPlaceId(int placeId) { this.placeId = placeId; }
 
     public Place getPlace() { return place; }
     public void setPlace(Place place) { this.place = place; }

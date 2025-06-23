@@ -38,7 +38,7 @@ public class EditPlaceServlet extends HttpServlet {
             PlaceServiceImplService service = new PlaceServiceImplService();
             PlaceService placeService = service.getPlaceServiceImplPort();
 
-            Place place = placeService.getPlace(placeId);
+            PlaceDTO place = placeService.getPlace(placeId);
 
             if (place != null) {
                 request.setAttribute("place", place);
@@ -66,7 +66,7 @@ public class EditPlaceServlet extends HttpServlet {
         }
 
         try {
-            int placeId = Integer.parseInt(request.getParameter("placeId"));
+            int placeId = Integer.parseInt(request.getParameter("id"));
             String name = request.getParameter("placeName");
             String description = request.getParameter("description");
             String address = request.getParameter("address");

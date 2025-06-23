@@ -58,18 +58,18 @@
                                    placeholder="Enter place name, description..." required>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="category" class="form-label">Category</label>
-                            <select class="form-select" id="category" name="category">
-                                <option value="">All Category</option>
-                                <option value="RESTAURANT">Restaurant</option>
-                                <option value="HOTEL">Hotel</option>
-                                <option value="ATTRACTION">Attraction</option>
-                                <option value="ENTERTAINMENT">Entertainment</option>
-                                <option value="SHOPPING">Shopping</option>
-                                <option value="TRANSPORT">Transport</option>
-                            </select>
-                        </div>
+<%--                        <div class="mb-3">--%>
+<%--                            <label for="category" class="form-label">Category</label>--%>
+<%--                            <select class="form-select" id="category" name="category">--%>
+<%--                                <option value="">All Category</option>--%>
+<%--                                <option value="RESTAURANT">Restaurant</option>--%>
+<%--                                <option value="HOTEL">Hotel</option>--%>
+<%--                                <option value="ATTRACTION">Attraction</option>--%>
+<%--                                <option value="ENTERTAINMENT">Entertainment</option>--%>
+<%--                                <option value="SHOPPING">Shopping</option>--%>
+<%--                                <option value="TRANSPORT">Transport</option>--%>
+<%--                            </select>--%>
+<%--                        </div>--%>
 
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary">
@@ -80,43 +80,43 @@
                 </div>
             </div>
 
-            <!-- Popular Places Section -->
-            <div class="card mt-4">
-                <div class="card-header">
-                    <h5 class="mb-0">Popular Place</h5>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <i class="fas fa-mountain fa-2x text-success mb-2"></i>
-                                    <h6>Tourist Attraction</h6>
-                                    <a href="search?category=ATTRACTION" class="btn btn-sm btn-outline-primary">See More</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <i class="fas fa-utensils fa-2x text-danger mb-2"></i>
-                                    <h6>Restaurant</h6>
-                                    <a href="search?category=RESTAURANT" class="btn btn-sm btn-outline-primary">See More</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <i class="fas fa-bed fa-2x text-info mb-2"></i>
-                                    <h6>Hotel</h6>
-                                    <a href="search?category=HOTEL" class="btn btn-sm btn-outline-primary">Xem thêm</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<%--            <!-- Popular Places Section -->--%>
+<%--            <div class="card mt-4">--%>
+<%--                <div class="card-header">--%>
+<%--                    <h5 class="mb-0">Popular Place</h5>--%>
+<%--                </div>--%>
+<%--                <div class="card-body">--%>
+<%--                    <div class="row">--%>
+<%--                        <div class="col-md-4 mb-3">--%>
+<%--                            <div class="card">--%>
+<%--                                <div class="card-body text-center">--%>
+<%--                                    <i class="fas fa-mountain fa-2x text-success mb-2"></i>--%>
+<%--                                    <h6>Tourist Attraction</h6>--%>
+<%--                                    <a href="search?category=ATTRACTION" class="btn btn-sm btn-outline-primary">See More</a>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                        <div class="col-md-4 mb-3">--%>
+<%--                            <div class="card">--%>
+<%--                                <div class="card-body text-center">--%>
+<%--                                    <i class="fas fa-utensils fa-2x text-danger mb-2"></i>--%>
+<%--                                    <h6>Restaurant</h6>--%>
+<%--                                    <a href="search?category=RESTAURANT" class="btn btn-sm btn-outline-primary">See More</a>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                        <div class="col-md-4 mb-3">--%>
+<%--                            <div class="card">--%>
+<%--                                <div class="card-body text-center">--%>
+<%--                                    <i class="fas fa-bed fa-2x text-info mb-2"></i>--%>
+<%--                                    <h6>Hotel</h6>--%>
+<%--                                    <a href="search?category=HOTEL" class="btn btn-sm btn-outline-primary">Xem thêm</a>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--            </div>--%>
         </div>
     </div>
 </div>

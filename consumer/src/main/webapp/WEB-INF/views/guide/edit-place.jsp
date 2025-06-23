@@ -362,6 +362,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8 col-lg-6">
+
                 <!-- Back Button -->
                 <div class="mb-4">
                     <a href="home" class="back-button">
@@ -386,68 +387,67 @@
                         </h4>
                     </div>
                     <div class="card-body">
-                        <form method="post" enctype="multipart/form-data">
+                        <form method="post" enctype="multipart/form-data" action="${not empty place ? 'edit-place' : 'add-place'}">
+                            <!-- Hidden ID nếu cập nhật -->
                             <c:if test="${not empty place}">
-                                <input type="hidden" name="placeId" value="${place.placeId}" />
+                                <input type="hidden" name="id" value="${place.id}" />
                             </c:if>
 
+                            <!-- Name -->
                             <div class="mb-4 form-group">
                                 <label for="placeName" class="form-label required-field">Destination Name</label>
                                 <input type="text" class="form-control" id="placeName" name="placeName"
-                                       required maxlength="255" value="${place.placeName}"
+                                       required maxlength="255"
+                                       value="${place.placeName != null ? place.placeName : ''}"
                                        placeholder="Enter the destination name">
-                                <div class="form-text">
-                                    <i class="fas fa-info-circle"></i>
-                                    Choose a memorable name that captures the essence of this place
-                                </div>
                             </div>
 
+                            <!-- Address -->
                             <div class="mb-4 form-group">
                                 <label for="address" class="form-label required-field">Location</label>
                                 <input type="text" class="form-control" id="address" name="address"
-                                       required maxlength="255" value="${place.address}"
+                                       required maxlength="255"
+                                       value="${place.address != null ? place.address : ''}"
                                        placeholder="e.g., Hanoi, Vietnam">
-                                <div class="form-text">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    Provide the complete address or location details
-                                </div>
                             </div>
 
+                            <!-- Description -->
                             <div class="mb-4 form-group">
                                 <label for="description" class="form-label required-field">Description</label>
                                 <textarea class="form-control" id="description" name="description"
                                           rows="5" required maxlength="1000"
-                                          placeholder="Tell visitors what makes this destination special...">${place.description}</textarea>
-                                <div class="d-flex justify-content-between">
-                                    <div class="form-text">
-                                        <i class="fas fa-pen-fancy"></i>
-                                        Share what makes this destination unique and worth visiting
-                                    </div>
-                                    <div class="char-counter" id="charCounter">0/1000</div>
-                                </div>
+                                          placeholder="Describe this destination">${place.description != null ? place.description : ''}</textarea>
                             </div>
 
+                            <!-- Ảnh hiện có (khi update) -->
+                            <c:if test="${not empty place.imageUrls}">
+                                <div class="mb-3">
+                                    <label class="form-label">Current Image:</label>
+                                    <img src="${pageContext.request.contextPath}/${place.imageUrls[0]}"
+                                         class="img-fluid rounded" style="max-height: 300px;"
+                                         alt="Current Image" />
+                                </div>
+                            </c:if>
+
+                            <!-- Upload ảnh mới -->
                             <div class="mb-4 form-group">
-                                <label for="image" class="form-label">Destination Image</label>
+                                <label for="image" class="form-label">Upload New Image</label>
                                 <input type="file" class="form-control" id="image" name="image"
                                        accept="image/*" onchange="previewImage(this)">
                                 <div class="form-text">
-                                    <i class="fas fa-camera"></i>
-                                    Upload a stunning photo that showcases this destination (JPG, PNG, WebP)
+                                    ${not empty place ? 'Upload a new image to replace the current one' : 'Upload a destination photo (optional)'}
                                 </div>
 
-                                <!-- Image Preview -->
-                                <div id="imagePreview" class="image-preview-container">
-                                    <div class="upload-placeholder" id="uploadPlaceholder">
-                                        <i class="fas fa-cloud-upload-alt"></i>
-                                        <h6>Upload Destination Photo</h6>
-                                        <p class="mb-0">Choose a high-quality image that represents this amazing destination</p>
-                                    </div>
-                                    <img id="preview" src="" alt="Preview" style="display: none; max-width: 100%; max-height: 300px;">
+                                <!-- Preview ảnh vừa chọn -->
+                                <div class="mt-3" id="imagePreview" style="display: none;">
+                                    <label class="form-label">Preview:</label>
+                                    <img id="preview" src="" alt="Preview"
+                                         style="max-width: 100%; max-height: 300px;" />
                                 </div>
                             </div>
 
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end btn-group-responsive">
+                            <!-- Buttons -->
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                 <a href="home" class="btn btn-secondary btn-lg">
                                     <i class="fas fa-times"></i> Cancel
                                 </a>
@@ -459,6 +459,7 @@
                         </form>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
