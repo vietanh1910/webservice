@@ -454,12 +454,12 @@
         <c:forEach var="place" items="${places}">
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card place-card h-100">
-                    <c:if test="${place.imageUrls != null}">
-                        <img src="data:image/jpeg;base64,${place.imageUrls[0]}"
+                    <c:if test="${not empty place.imageUrls}">
+                        <img src="${pageContext.request.contextPath}/${place.imageUrls[0]}"
                              class="card-img-top" alt="${place.placeName}"
                              style="height: 220px; object-fit: cover;">
                     </c:if>
-                    <c:if test="${place.imageUrls == null}">
+                    <c:if test="${empty place.imageUrls}">
                         <div class="card-img-top bg-light d-flex align-items-center justify-content-center loading-placeholder"
                              style="height: 220px;">
                             <i class="fas fa-mountain fa-3x text-muted"></i>

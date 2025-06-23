@@ -6,12 +6,15 @@ import org.example.provider.dao.UserDAO;
 import org.example.provider.dto.PlaceDTO;
 import org.example.provider.entity.Place;
 import org.example.provider.entity.User;
+import org.example.provider.entity.PlaceImage;
 import org.example.provider.services.PlaceService;
 import org.hibernate.Hibernate;
 
 import javax.jws.WebService;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @WebService(endpointInterface = "org.example.provider.services.PlaceService")
 public class PlaceServiceImpl implements PlaceService {
@@ -94,10 +97,11 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
-    public Place getPlace(int placeId) {
+    @XmlTransient
+    public PlaceDTO getPlace(int placeId) {
         try {
             Place place = placeDAO.findById(placeId);
-            return place;
+            return toDTO(place);
         } catch (Exception e) {
             System.err.println("Database error in getPlace: " + e.getMessage());
             return null;
@@ -112,5 +116,28 @@ public class PlaceServiceImpl implements PlaceService {
             System.err.println("Database error in getPlacesByGuide: " + e.getMessage());
             return new ArrayList<>();
         }
+    }
+
+    public static PlaceDTO toDTO(Place place) {
+        if (place == null) return null;
+
+        PlaceDTO dto = new PlaceDTO();
+        dto.setId(place.getPlaceId());
+        dto.setPlaceName(place.getPlaceName());
+        dto.setAddress(place.getAddress());
+        dto.setDescription(place.getDescription());
+        dto.setGuideId(place.getGuideId());
+        dto.setAverageRating(place.getAverageRating());
+        dto.setTotalRatings(place.getTotalRatings());
+
+        // Convert images to base64 or url if needed
+        if (place.getImages() != null) {
+            List<String> urls = place.getImages().stream()
+                    .map(PlaceImage::getImageUrl)
+                    .collect(Collectors.toList());
+            dto.setImageUrls(urls);
+        }
+
+        return dto;
     }
 }
