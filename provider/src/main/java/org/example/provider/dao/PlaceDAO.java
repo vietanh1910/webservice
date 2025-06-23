@@ -8,36 +8,60 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class PlaceDAO {
-
-    public List<Place> searchPlaces(String keyword) {
-        List<Place> places = null;
-        Session session = null;
-
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
+    public List<PlaceDTO> searchPlaces(String keyword) {
+        List<PlaceDTO> result = new ArrayList<>();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "FROM Place p WHERE (p.placeName LIKE :keyword OR p.description LIKE :keyword OR p.address LIKE :keyword) AND p.isDeleted = false";
             Query<Place> query = session.createQuery(hql, Place.class);
             query.setParameter("keyword", "%" + keyword + "%");
-            places = query.getResultList();
-            for(Place place : places) {
+
+            List<Place> places = query.getResultList();
+
+            for (Place place : places) {
                 Hibernate.initialize(place.getImages());
                 Hibernate.initialize(place.getInformation());
+                result.add(toDTO(place));
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
-        return places;
+        return result;
     }
+
+    private PlaceDTO toDTO(Place place) {
+        if (place == null) return null;
+
+        PlaceDTO dto = new PlaceDTO();
+        dto.setId(place.getPlaceId());
+        dto.setPlaceName(place.getPlaceName());
+        dto.setAddress(place.getAddress());
+        dto.setDescription(place.getDescription());
+        dto.setGuideId(place.getGuideId());
+        dto.setAverageRating(place.getAverageRating());
+        dto.setTotalRatings(place.getTotalRatings());
+
+        // Convert images to base64 or url if needed
+        if (place.getImages() != null) {
+            List<String> urls = place.getImages().stream()
+                    .map(PlaceImage::getImageUrl)
+                    .collect(Collectors.toList());
+            dto.setImageUrls(urls);
+        }
+
+        if (place.getInformation() != null) {
+            dto.setPlaceInformation(place.getInformation().getContent()); // tùy vào thông tin bạn cần
+        }
+
+        return dto;
+    }
+
 
     public boolean addPlace(Place place) {
         Session session = null;
@@ -287,4 +311,3 @@ public class PlaceDAO {
         }
     }
 }
-

@@ -397,10 +397,11 @@
                 <c:forEach var="place" items="${places}" varStatus="status">
                     <div class="col-lg-4 col-md-6 fade-in" style="animation-delay: ${status.index * 0.1}s;">
                         <div class="place-card">
-                            <c:if test="${not empty place.thumbnailUrl}">
-                                <img src="${place.thumbnailUrl}" class="card-img-top place-image" alt="${place.name}">
+                            <c:if test="${not empty place.imageUrls}">
+                                <img src="${pageContext.request.contextPath}/${place.imageUrls[0]}"
+                                     class="card-img-top place-image" alt="${place.placeName}">
                             </c:if>
-                            <c:if test="${empty place.thumbnailUrl}">
+                            <c:if test="${empty place.imageUrls}">
                                 <div class="card-img-top place-image d-flex align-items-center justify-content-center"
                                      style="background: var(--gradient-primary); color: white;">
                                     <i class="fas fa-image fa-3x opacity-50"></i>
@@ -408,7 +409,7 @@
                             </c:if>
 
                             <div class="place-card-body">
-                                <h5 class="place-title">${place.name}</h5>
+                                <h5 class="place-title">${place.placeName}</h5>
 
                                 <div class="place-address">
                                     <i class="fas fa-map-marker-alt text-danger"></i>
@@ -426,9 +427,18 @@
                                     </c:choose>
                                 </p>
 
-                                <div class="place-meta">
-                                    <span class="place-category">${place.category}</span>
+                                <p class="place-description">
+                                    <c:choose>
+                                        <c:when test="${place.placeInformation.length() > 120}">
+                                            ${place.placeInformation.substring(0, 120)}...
+                                        </c:when>
+                                        <c:otherwise>
+                                            ${place.placeInformation}
+                                        </c:otherwise>
+                                    </c:choose>
+                                </p>
 
+                                <div class="place-meta">
                                     <c:if test="${place.averageRating > 0}">
                                         <div class="rating-section">
                                             <div class="stars">
@@ -456,10 +466,6 @@
                                     <i class="fas fa-eye"></i>
                                     View Details
                                 </a>
-                                <small class="place-date">
-                                    <i class="fas fa-calendar-alt me-1"></i>
-                                    <fmt:formatDate value="${place.createdAt}" pattern="MMM dd, yyyy"/>
-                                </small>
                             </div>
                         </div>
                     </div>
@@ -484,7 +490,7 @@
         // Stagger animation for cards
         const cards = document.querySelectorAll('.place-card');
         cards.forEach((card, index) => {
-            card.style.animationDelay = `${index * 0.1}s`;
+            card.style.animationDelay = ${index * 0.1}s;
         });
 
         // Add hover effects for better UX

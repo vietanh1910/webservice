@@ -105,7 +105,6 @@ public class EditPlaceServlet extends HttpServlet {
             PlaceService placeService = service.getPlaceServiceImplPort();
 
             boolean success = placeService.updatePlace(placeId, place, user.getUserId());
-
             if (success) {
                 response.sendRedirect("home?success=Place updated successfully");
             } else {

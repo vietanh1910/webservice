@@ -244,7 +244,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="home.jsp">
+        <a class="navbar-brand" href="search.jsp">
             <i class="fas fa-compass me-2"></i>TravelExplorer
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -316,28 +316,28 @@
                         </div>
                     </div>
                 </form>
-          </div>
-
-            <!-- Popular Categories -->
-            <div class="row g-4">
-                <div class="col-12 text-center mb-3">
-                    <h3 class="fw-bold text-white mb-2">Popular Categories</h3>
-                    <p class="text-white-50">Explore different types of places</p>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="category-card text-center">
-                        <div class="category-icon attraction">
-                            <i class="fas fa-mountain"></i>
-                        </div>
-                        <h5 class="category-title">Tourist Attractions</h5>
-                        <p class="text-muted mb-3">Discover breathtaking landmarks and scenic spots</p>
-                        <a href="search?category=ATTRACTION" class="btn btn-category">
-                            Explore Attractions
-                        </a>
-                    </div>
-                </div>
             </div>
+
+            <%--            <!-- Popular Categories -->--%>
+            <%--            <div class="row g-4">--%>
+            <%--                <div class="col-12 text-center mb-3">--%>
+            <%--                    <h3 class="fw-bold text-white mb-2">Popular Categories</h3>--%>
+            <%--                    <p class="text-white-50">Explore different types of places</p>--%>
+            <%--                </div>--%>
+
+            <%--                <div class="col-md-4">--%>
+            <%--                    <div class="category-card text-center">--%>
+            <%--                        <div class="category-icon attraction">--%>
+            <%--                            <i class="fas fa-mountain"></i>--%>
+            <%--                        </div>--%>
+            <%--                        <h5 class="category-title">Tourist Attractions</h5>--%>
+            <%--                        <p class="text-muted mb-3">Discover breathtaking landmarks and scenic spots</p>--%>
+            <%--                        <a href="search?category=ATTRACTION" class="btn btn-category">--%>
+            <%--                            Explore Attractions--%>
+            <%--                        </a>--%>
+            <%--                    </div>--%>
+            <%--                </div>--%>
+            <%--            </div>--%>
         </div>
     </div>
 </div>

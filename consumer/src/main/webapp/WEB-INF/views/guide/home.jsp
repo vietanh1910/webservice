@@ -489,9 +489,9 @@
                             <a href="edit-place?id=${place.id}" class="btn btn-outline-primary btn-sm">
                                 <i class="fas fa-edit"></i> Edit
                             </a>
-                            <a href="manage-images?placeId=${place.id}" class="btn btn-outline-info btn-sm">
-                                <i class="fas fa-images"></i> Gallery
-                            </a>
+                                <%--                            <a href="manage-images?placeId=${place.id}" class="btn btn-outline-info btn-sm">--%>
+                                <%--                                <i class="fas fa-images"></i> Gallery--%>
+                                <%--                            </a>--%>
                             <button type="button" class="btn btn-outline-danger btn-sm"
                                     onclick="confirmDelete(${place.id}, '${place.placeName}')">
                                 <i class="fas fa-trash"></i> Delete

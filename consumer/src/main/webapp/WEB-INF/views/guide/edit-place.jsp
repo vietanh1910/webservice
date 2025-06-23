@@ -419,6 +419,14 @@
                                           placeholder="Describe this destination">${place.description != null ? place.description : ''}</textarea>
                             </div>
 
+                            <!-- Information -->
+                            <div class="mb-4 form-group">
+                                <label for="description" class="form-label required-field">Description</label>
+                                <textarea class="form-control" id="placeInformation" name="placeInformation"
+                                          rows="5" required maxlength="1000"
+                                          placeholder="Describe this destination">${place.placeInformation != null ? place.placeInformation : ''}</textarea>
+                            </div>
+
                             <!-- Ảnh hiện có (khi update) -->
                             <c:if test="${not empty place.imageUrls}">
                                 <div class="mb-3">
@@ -499,7 +507,7 @@
         function updateCounter() {
             const length = textarea.value.length;
             const maxLength = 1000;
-            counter.textContent = `${length}/${maxLength}`;
+            counter.textContent = ${length}/${maxLength};
 
             // Update counter color based on usage
             counter.classList.remove('warning', 'danger');

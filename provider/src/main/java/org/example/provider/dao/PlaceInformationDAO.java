@@ -1,15 +1,19 @@
 package org.example.provider.dao;
 
+import org.example.provider.entity.Place;
 import org.example.provider.entity.PlaceInformation;
 import org.example.provider.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 public class PlaceInformationDAO {
 
-    public boolean addInformation(PlaceInformation information) {
+    public boolean addInformation(PlaceInformation placeInformation) {
         Session session = null;
         Transaction transaction = null;
         boolean success = false;
@@ -18,7 +22,7 @@ public class PlaceInformationDAO {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
 
-            session.save(information);
+            session.save(placeInformation);
             transaction.commit();
             success = true;
         } catch (Exception e) {
@@ -33,6 +37,7 @@ public class PlaceInformationDAO {
         }
         return success;
     }
+
 
     public List<PlaceInformation> getInformationByPlace(int placeId) {
         List<PlaceInformation> informationList = null;

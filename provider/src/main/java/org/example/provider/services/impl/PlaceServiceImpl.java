@@ -24,7 +24,7 @@ public class PlaceServiceImpl implements PlaceService {
     private UserDAO userDAO = new UserDAO();
 
     @Override
-    public List<Place> searchPlaces(String keyword) {
+    public List<PlaceDTO> searchPlaces(String keyword) {
         try {
             if (keyword == null || keyword.trim().isEmpty()) {
                 return new ArrayList<>();
@@ -137,6 +137,8 @@ public class PlaceServiceImpl implements PlaceService {
                     .collect(Collectors.toList());
             dto.setImageUrls(urls);
         }
+
+        dto.setPlaceInformation(place.getInformation().getContent());
 
         return dto;
     }

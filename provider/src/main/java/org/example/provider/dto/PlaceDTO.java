@@ -11,6 +11,7 @@ public class PlaceDTO {
     private String address;
     private String description;
     private List<String> imageUrls;
+    private String placeInformation;
     private BigDecimal averageRating;
     private int totalRatings;
     private int guideId;
@@ -54,5 +55,12 @@ public class PlaceDTO {
 
     public List<String> getImageUrls() { return imageUrls; }
     public void setImageUrls(List<String> imageUrls) { this.imageUrls = imageUrls; }
-}
 
+    public String getPlaceInformation() {
+        return placeInformation;
+    }
+
+    public void setPlaceInformation(String placeInformation) {
+        this.placeInformation = placeInformation;
+    }
+}
