@@ -13,6 +13,15 @@ public class PlaceDTO {
     private List<String> imageUrls;
     private BigDecimal averageRating;
     private int totalRatings;
+    private int guideId;
+
+    public int getGuideId() {
+        return guideId;
+    }
+
+    public void setGuideId(int guideId) {
+        this.guideId = guideId;
+    }
 
     public BigDecimal getAverageRating() {
         return averageRating;

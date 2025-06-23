@@ -29,7 +29,7 @@ public interface PlaceService {
                         @WebParam(name = "userId") int userId);
 
     @WebMethod
-    Place getPlace(@WebParam(name = "placeId") int placeId);
+    PlaceDTO getPlace(@WebParam(name = "placeId") int placeId);
 
     @WebMethod
     List<PlaceDTO> getPlacesByGuide(@WebParam(name = "guideId") int guideId);

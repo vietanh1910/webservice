@@ -25,6 +25,10 @@ public class PlaceDAO {
             Query<Place> query = session.createQuery(hql, Place.class);
             query.setParameter("keyword", "%" + keyword + "%");
             places = query.getResultList();
+            for(Place place : places) {
+                Hibernate.initialize(place.getImages());
+                Hibernate.initialize(place.getInformation());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -122,6 +126,7 @@ public class PlaceDAO {
         return success;
     }
 
+
     public Place findById(int placeId) {
         Place place = null;
         Session session = null;
@@ -152,7 +157,7 @@ public class PlaceDAO {
 
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            String hql = "FROM Place p WHERE p.guideId = :guideId AND p.isDeleted = false";
+            String hql = "FROM Place p WHERE p.guideId = :guideId AND p.isDeleted = false ORDER BY p.createdAt DESC";
             Query<Place> query = session.createQuery(hql, Place.class);
             query.setParameter("guideId", guideId);
             List<Place> places = query.getResultList();

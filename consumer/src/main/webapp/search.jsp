@@ -314,26 +314,9 @@
                             <input type="text" class="form-control" id="keyword" name="keyword"
                                    placeholder="Enter place name, city, or description..." required>
                         </div>
-                        <div class="col-md-4">
-                            <label for="category" class="form-label fw-semibold">Category</label>
-                            <select class="form-select" id="category" name="category">
-                                <option value="">All Categories</option>
-                                <option value="RESTAURANT">Restaurant</option>
-                                <option value="HOTEL">Hotel</option>
-                                <option value="ATTRACTION">Attraction</option>
-                                <option value="ENTERTAINMENT">Entertainment</option>
-                                <option value="SHOPPING">Shopping</option>
-                                <option value="TRANSPORT">Transport</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="d-grid mt-4">
-                        <button type="submit" class="btn btn-search">
-                            <i class="fas fa-search me-2"></i>Search Now
-                        </button>
                     </div>
                 </form>
-            </div>
+          </div>
 
             <!-- Popular Categories -->
             <div class="row g-4">
@@ -351,71 +334,6 @@
                         <p class="text-muted mb-3">Discover breathtaking landmarks and scenic spots</p>
                         <a href="search?category=ATTRACTION" class="btn btn-category">
                             Explore Attractions
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="category-card text-center">
-                        <div class="category-icon restaurant">
-                            <i class="fas fa-utensils"></i>
-                        </div>
-                        <h5 class="category-title">Restaurants</h5>
-                        <p class="text-muted mb-3">Find the best dining experiences and local cuisine</p>
-                        <a href="search?category=RESTAURANT" class="btn btn-category">
-                            Find Restaurants
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="category-card text-center">
-                        <div class="category-icon hotel">
-                            <i class="fas fa-bed"></i>
-                        </div>
-                        <h5 class="category-title">Hotels</h5>
-                        <p class="text-muted mb-3">Book comfortable accommodations for your stay</p>
-                        <a href="search?category=HOTEL" class="btn btn-category">
-                            Browse Hotels
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="category-card text-center">
-                        <div class="category-icon entertainment">
-                            <i class="fas fa-music"></i>
-                        </div>
-                        <h5 class="category-title">Entertainment</h5>
-                        <p class="text-muted mb-3">Discover nightlife, shows, and entertainment venues</p>
-                        <a href="search?category=ENTERTAINMENT" class="btn btn-category">
-                            Find Entertainment
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="category-card text-center">
-                        <div class="category-icon shopping">
-                            <i class="fas fa-shopping-bag"></i>
-                        </div>
-                        <h5 class="category-title">Shopping</h5>
-                        <p class="text-muted mb-3">Explore markets, malls, and unique shopping spots</p>
-                        <a href="search?category=SHOPPING" class="btn btn-category">
-                            Go Shopping
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="category-card text-center">
-                        <div class="category-icon transport">
-                            <i class="fas fa-car"></i>
-                        </div>
-                        <h5 class="category-title">Transport</h5>
-                        <p class="text-muted mb-3">Find transportation options and travel services</p>
-                        <a href="search?category=TRANSPORT" class="btn btn-category">
-                            Check Transport
                         </a>
                     </div>
                 </div>

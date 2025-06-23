@@ -7,8 +7,10 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Paths;
 import java.util.Base64;
 
 @WebServlet("/guide/add-place")
@@ -33,6 +35,7 @@ public class AddPlaceServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
         UserDTO user = (UserDTO) session.getAttribute("user");
@@ -43,68 +46,75 @@ public class AddPlaceServlet extends HttpServlet {
         }
 
         try {
+            // Lấy thông tin từ form
             String name = request.getParameter("name");
             String description = request.getParameter("description");
             String location = request.getParameter("location");
 
-            // Xử lý upload hình ảnh
+            // Xử lý ảnh upload
             Part imagePart = request.getPart("image");
-            String imageData = null;
+            String imageUrl = null;
 
             if (imagePart != null && imagePart.getSize() > 0) {
-                InputStream imageStream = imagePart.getInputStream();
-                ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-                int nRead;
-                byte[] data = new byte[1024];
-                while ((nRead = imageStream.read(data, 0, data.length)) != -1) {
-                    buffer.write(data, 0, nRead);
-                }
-                byte[] imageBytes = buffer.toByteArray();
-                imageData = Base64.getEncoder().encodeToString(imageBytes);
-                imageStream.close();
+                // Tạo thư mục uploads nếu chưa có
+                String uploadPath = getServletContext().getRealPath("") + "uploads";
+                File uploadDir = new File(uploadPath);
+                if (!uploadDir.exists()) uploadDir.mkdir();
+
+                // Tạo tên file duy nhất
+                String originalFileName = Paths.get(imagePart.getSubmittedFileName()).getFileName().toString();
+                String fileExt = originalFileName.substring(originalFileName.lastIndexOf("."));
+                String fileName = "place_" + System.currentTimeMillis() + fileExt;
+
+                // Ghi file vào thư mục uploads
+                String fullPath = uploadPath + File.separator + fileName;
+                imagePart.write(fullPath);
+
+                // Đường dẫn tương đối để lưu DB và hiển thị
+                imageUrl = "uploads/" + fileName;
             }
 
-            // Tạo Place object
+            // Tạo đối tượng Place
             Place place = new Place();
             place.setPlaceName(name);
             place.setDescription(description);
             place.setAddress(location);
 
-
-            // Gọi web service để thêm địa điểm
+            // Gọi web service để lưu place
             PlaceServiceImplService service = new PlaceServiceImplService();
             PlaceService placeService = service.getPlaceServiceImplPort();
 
             ImageServiceImplService imageService = new ImageServiceImplService();
             ImageService imageServicePort = imageService.getImageServiceImplPort();
 
-            // Nếu có ảnh, tạo thêm PlaceImage để gửi kèm
-            PlaceImage placeImage = null;
-            if (imageData != null) {
-                placeImage = new PlaceImage();
-                placeImage.setImageUrl(imageData);
-            }
-
-            // Gọi hàm addPlace mới có thêm ảnh
             int placeId = placeService.addPlace(place, user.getUserId());
-            if(placeId <= 0) {
+            if (placeId <= 0) {
                 request.setAttribute("error", "Không thể thêm địa điểm.");
                 request.getRequestDispatcher("/WEB-INF/views/guide/add-place.jsp").forward(request, response);
                 return;
             }
-            boolean successImage = imageServicePort.addImage(placeId, placeImage, user.getUserId());
 
+            // Nếu có ảnh thì thêm ảnh
+            boolean successImage = true;
+            if (imageUrl != null) {
+                PlaceImage placeImage = new PlaceImage();
+                placeImage.setImageUrl(imageUrl);
+                placeImage.setUploadedBy(user.getUserId());
+                successImage = imageServicePort.addImage(placeId, placeImage, user.getUserId());
+            }
+
+            // Điều hướng theo kết quả
             if (successImage) {
                 response.sendRedirect("home?success=Place added successfully");
             } else {
-                request.setAttribute("error", "Không thể thêm địa điểm.");
+                request.setAttribute("error", "Thêm địa điểm thành công nhưng lỗi khi lưu ảnh.");
                 request.getRequestDispatcher("/WEB-INF/views/guide/add-place.jsp").forward(request, response);
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             request.setAttribute("error", "Lỗi khi thêm địa điểm: " + e.getMessage());
             request.getRequestDispatcher("/WEB-INF/views/guide/add-place.jsp").forward(request, response);
         }
     }
-
 }

@@ -1,9 +1,14 @@
 package org.example.consumer.controller;
 
+import org.example.client.generated.Place;
+import org.example.client.generated.PlaceService;
+import org.example.client.generated.PlaceServiceImplService;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-import java.io.IOException;;
+import java.io.IOException;
+import java.util.List;;
 
 @WebServlet("/search")
 public class SearchPlaceServlet extends HttpServlet {
@@ -13,7 +18,9 @@ public class SearchPlaceServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String keyword = request.getParameter("keyword");
-        String category = request.getParameter("category");
+        if( keyword == null) {
+            keyword = "";
+        }
 
         if (keyword == null || keyword.trim().isEmpty()) {
             // Hiển thị form search
@@ -26,11 +33,10 @@ public class SearchPlaceServlet extends HttpServlet {
             PlaceServiceImplService service = new PlaceServiceImplService();
             PlaceService placeService = service.getPlaceServiceImplPort();
 
-            List<Place> places = placeService.searchPlaces(keyword, category);
+            List<Place> places = placeService.searchPlaces(keyword);
 
             request.setAttribute("places", places);
             request.setAttribute("keyword", keyword);
-            request.setAttribute("category", category);
 
             request.getRequestDispatcher("/search-results.jsp").forward(request, response);
 

@@ -53,9 +53,11 @@
         </dependency>
     </dependencies>
 
+    <!-- ... giữ nguyên phần trên ... -->
+
     <build>
         <plugins>
-            <!-- === PLUGIN SINH CODE TỪ WSDL === -->
+            <!-- Plugin sinh mã từ WSDL -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>jaxws-maven-plugin</artifactId>
@@ -72,6 +74,11 @@
                     <packageName>org.example.client.generated</packageName>
                     <wsdlUrls>
                         <wsdlUrl>http://localhost:8080/auth?wsdl</wsdlUrl>
+                        <wsdlUrl>http://localhost:8080/services/places?wsdl</wsdlUrl>
+                        <wsdlUrl>http://localhost:8080/services/images?wsdl</wsdlUrl>
+                        <wsdlUrl>http://localhost:8080/services/ratings?wsdl</wsdlUrl>
+                        <wsdlUrl>http://localhost:8080/services/comments?wsdl</wsdlUrl>
+<!--                        <wsdlUrl>http://localhost:8080/services/traveller?wsdl</wsdlUrl>-->
                     </wsdlUrls>
                     <keep>true</keep>
                     <verbose>true</verbose>
@@ -79,4 +86,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
