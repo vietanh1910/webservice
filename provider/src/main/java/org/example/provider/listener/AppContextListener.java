@@ -8,16 +8,23 @@ import javax.servlet.annotation.WebListener;
 
 @WebListener
 public class AppContextListener implements ServletContextListener {
-
+    private RatingScheduler scheduler;
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         System.out.println(">>> Initializing Hibernate...");
-        HibernateUtil.getSessionFactory(); // kích hoạt Hibernate ở startup
+        HibernateUtil.getSessionFactory();
+        scheduler = new RatingScheduler();
+        scheduler.startScheduler();
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
+        if (scheduler != null) {
+            scheduler.stopScheduler();
+        }
         HibernateUtil.shutdown(); // đóng Hibernate khi tắt app
     }
+
+
 }
 

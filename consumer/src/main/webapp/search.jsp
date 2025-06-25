@@ -52,17 +52,14 @@
                 <a href="home" class="text-gray-800 hover:text-blue-600 px-3 py-2 font-medium">Home</a>
                 <a href="search" class="text-blue-600 px-3 py-2 font-medium border-b-2 border-blue-600">Search</a>
                 <c:choose>
-                    <c:when test="${sessionScope.token != null}">
-                        <a href="logout" class="text-gray-800 hover:text-blue-600 px-3 py-2 font-medium">
-                            <i class="fas fa-sign-out-alt mr-1"></i>Logout
+                    <c:when test="${sessionScope.user != null and sessionScope.user.role == 2}">
+                        <a href="${pageContext.request.contextPath}/logout" class="text-gray-800 hover:text-blue-600 px-3 py-2 font-medium">
+                            <i class="fas fa-sign-out-alt mr-1"></i> Logout
                         </a>
                     </c:when>
                     <c:otherwise>
-                        <a href="login" class="text-gray-800 hover:text-blue-600 px-3 py-2 font-medium">
-                            <i class="fas fa-sign-in-alt mr-1"></i>Login
-                        </a>
-                        <a href="register" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full font-medium transition duration-300">
-                            <i class="fas fa-user-plus mr-1"></i>Register
+                        <a href="login" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full font-medium transition duration-300">
+                            <i class="fas fa-sign-in-alt mr-1"></i> Login
                         </a>
                     </c:otherwise>
                 </c:choose>
@@ -81,7 +78,7 @@
             <a href="home" class="block px-3 py-2 text-gray-800 hover:text-blue-600 font-medium">Home</a>
             <a href="search" class="block px-3 py-2 text-blue-600 font-medium">Search</a>
             <c:choose>
-                <c:when test="${sessionScope.token != null}">
+                <c:when test="${sessionScope.user != null and sessionScope.user.role == 2}">
                     <a href="logout" class="block px-3 py-2 text-gray-800 hover:text-blue-600 font-medium">
                         <i class="fas fa-sign-out-alt mr-1"></i>Logout
                     </a>

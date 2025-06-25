@@ -60,7 +60,25 @@
                 </div>
             </div>
             <div class="hidden md:flex items-center space-x-8">
-                <a href="#" class="text-gray-800 hover:text-blue-600 px-3 py-2 font-medium">Home</a>
+                <a href="search" class="text-gray-800 hover:text-blue-600 px-3 py-2 font-medium">
+                    <i class="fas fa-search mr-1"></i> Search
+                </a>
+                <a href="home" class="text-gray-800 hover:text-blue-600 px-3 py-2 font-medium">Home</a>
+                <c:choose>
+                    <c:when test="${sessionScope.user != null and sessionScope.user.role == 2}">
+                        <a href="${pageContext.request.contextPath}/logout" class="block px-3 py-2 text-gray-800 hover:text-blue-600 font-medium">
+                            <i class="fas fa-sign-out-alt mr-1"></i>Logout
+                        </a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="login" class="block px-3 py-2 text-gray-800 hover:text-blue-600 font-medium">
+                            <i class="fas fa-sign-in-alt mr-1"></i>Login
+                        </a>
+                        <a href="register" class="block px-3 py-2 text-gray-800 hover:text-blue-600 font-medium">
+                            <i class="fas fa-user-plus mr-1"></i>Register
+                        </a>
+                    </c:otherwise>
+                </c:choose>
 <%--                <a href="#destinations" class="text-gray-800 hover:text-blue-600 px-3 py-2 font-medium">Destinations</a>--%>
 <%--                <a href="#services" class="text-gray-800 hover:text-blue-600 px-3 py-2 font-medium">Services</a>--%>
 <%--                <a href="#about" class="text-gray-800 hover:text-blue-600 px-3 py-2 font-medium">About</a>--%>
@@ -102,29 +120,6 @@
     </div>
 </section>
 
-<!-- Search Section -->
-<section class="bg-white py-12 -mt-16 relative z-10">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-white rounded-xl shadow-xl p-6 md:p-8">
-            <h2 class="text-2xl font-bold text-gray-800 mb-6">Find Your Perfect Trip</h2>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div class="relative">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="keyword">Destination</label>
-                    <div class="relative">
-                        <input type="text" id="keyword" placeholder="Where to?" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <i class="fas fa-map-marker-alt absolute right-3 top-3 text-gray-400"></i>
-                    </div>
-                </div>
-                <div class="flex items-end">
-                    <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300">
-                        Search <i class="fas fa-search ml-2"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- Popular Destinations -->
 <section id="destinations" class="py-16 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -152,12 +147,6 @@
                     </div>
                 </div>
             </c:forEach>
-        </div>
-
-        <div class="text-center mt-12">
-            <a href="places" class="bg-transparent hover:bg-blue-600 text-blue-600 hover:text-white font-bold py-3 px-6 border-2 border-blue-600 rounded-full transition duration-300">
-                View All Destinations <i class="fas fa-arrow-right ml-2"></i>
-            </a>
         </div>
     </div>
 </section>

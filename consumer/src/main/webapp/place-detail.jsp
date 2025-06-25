@@ -80,13 +80,13 @@
                 </div>
             </div>
             <div class="hidden md:flex items-center space-x-8">
-                <a href="/" class="text-gray-800 hover:text-blue-600 px-3 py-2 font-medium">Home</a>
+                <a href="home" class="text-gray-800 hover:text-blue-600 px-3 py-2 font-medium">Home</a>
                 <a href="search" class="text-gray-800 hover:text-blue-600 px-3 py-2 font-medium">
                     <i class="fas fa-search mr-1"></i> Search
                 </a>
                 <c:choose>
-                    <c:when test="${sessionScope.token != null}">
-                        <a href="logout" class="text-gray-800 hover:text-blue-600 px-3 py-2 font-medium">
+                    <c:when test="${sessionScope.user != null and sessionScope.user.role == 2}">
+                        <a href="${pageContext.request.contextPath}/logout" class="text-gray-800 hover:text-blue-600 px-3 py-2 font-medium">
                             <i class="fas fa-sign-out-alt mr-1"></i> Logout
                         </a>
                     </c:when>
@@ -96,6 +96,7 @@
                         </a>
                     </c:otherwise>
                 </c:choose>
+
             </div>
         </div>
     </div>
@@ -206,7 +207,7 @@
         <!-- Reviews Sidebar -->
         <div class="lg:col-span-1">
             <!-- Write Review Section -->
-            <c:if test="${sessionScope.token != null}">
+            <c:if test="${sessionScope.user != null and sessionScope.user.role == 2}">
                 <div class="bg-white rounded-xl shadow-lg p-6 mb-8 fade-in">
                     <div class="text-center">
                         <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -224,8 +225,8 @@
             </c:if>
 
             <!-- Login Prompt -->
-            <c:if test="${sessionScope.token == null}">
-                <div class="bg-white rounded-xl shadow-lg p-6 mb-8 fade-in">
+            <c:if test="${sessionScope.user == null or sessionScope.user.role != 2}">
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8 fade-in">
                     <div class="text-center">
                         <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                             <i class="fas fa-sign-in-alt text-blue-600 text-xl"></i>
@@ -320,18 +321,20 @@
             </div>
 
             <!-- No Reviews State -->
-            <c:if test="${place.totalRatings == 0}">
+            <c:if test="${empty reviews}">
                 <div class="p-12 text-center">
                     <i class="fas fa-comments text-gray-300 text-6xl mb-4"></i>
                     <h4 class="text-xl font-bold text-gray-600 mb-2">No Reviews Yet</h4>
                     <p class="text-gray-500 mb-6">Be the first to share your experience about this destination!</p>
-                    <c:if test="${sessionScope.token != null}">
-                        <button type="button" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full transition duration-300"
-                                onclick="showReviewModal(${place.id})">
-                            <i class="fas fa-star mr-2"></i>
-                            Write First Review
-                        </button>
-                    </c:if>
+                    <c:choose>
+                        <c:when test="${sessionScope.user != null and sessionScope.user.role == 2}">
+                            <button type="button" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full transition duration-300"
+                                    onclick="showReviewModal(${place.id})">
+                                <i class="fas fa-star mr-2"></i>
+                                Write First Review
+                            </button>
+                        </c:when>
+                    </c:choose>
                 </div>
             </c:if>
 
@@ -393,8 +396,7 @@
             <h3 class="text-xl font-bold text-gray-800 mb-2">Rate & Review</h3>
             <p class="text-gray-600">${place.placeName}</p>
         </div>
-
-        <form id="reviewForm">
+        <form id="reviewForm" method="post" action="submit-rating">
             <input type="hidden" id="placeId" value="${place.id}">
 
             <!-- Star Rating -->
@@ -534,7 +536,7 @@
     }
 
     // Handle review form submission
-    document.getElementById('reviewForm').addEventListener('submit', function(e) {
+    document.getElementById('reviewForm').addEventListener('submit', function (e) {
         e.preventDefault();
 
         if (selectedRating === 0) {
@@ -542,25 +544,38 @@
             return;
         }
 
-        const formData = {
-            placeId: document.getElementById('placeId').value,
-            rating: selectedRating,
-            comment: document.getElementById('reviewComment').value
-        };
+        const formData = new URLSearchParams();
+        formData.append('placeId', document.getElementById('placeId').value);
+        formData.append('rating', selectedRating);
+        formData.append('comment', document.getElementById('reviewComment').value);
 
-        // Here you would typically send the data to your server
-        console.log('Submitting review:', formData);
+        const basePath = window.location.pathname.replace(/\/[^/]+$/, '');
 
-        // For demo purposes, just close the modal
-        alert('Thank you for your review! It will be displayed after approval.');
-        closeReviewModal();
-
-        // In a real application, you would:
-        // 1. Send AJAX request to server
-        // 2. Handle response
-        // 3. Update the page with new review or show success message
-        // 4. Refresh reviews section
+        fetch(`${basePath}/submit-rating`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: formData
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('Thank you for your review! It will be displayed after approval.');
+                    closeReviewModal();
+                    window.location.reload();
+                    // Optionally: reload or update reviews section
+                } else if (response.status === 401) {
+                    alert('You are not authorized to submit a review.');
+                } else {
+                    alert('Something went wrong. Please try again later.');
+                }
+            })
+            .catch(error => {
+                console.error('Error submitting review:', error);
+                alert('Error connecting to server.');
+            });
     });
+
 
     // Close modal when clicking outside
     document.getElementById('reviewModal').addEventListener('click', function(e) {

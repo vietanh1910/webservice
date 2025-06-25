@@ -2,16 +2,20 @@ package org.example.provider.services.impl;
 
 import org.example.provider.dao.PlaceDAO;
 import org.example.provider.dao.PlaceImageDAO;
+import org.example.provider.dao.RatingDAO;
 import org.example.provider.dao.UserDAO;
 import org.example.provider.dto.PlaceDTO;
 import org.example.provider.entity.Place;
+import org.example.provider.entity.Rating;
 import org.example.provider.entity.User;
 import org.example.provider.entity.PlaceImage;
 import org.example.provider.services.PlaceService;
-import org.hibernate.Hibernate;
 
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlTransient;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +26,7 @@ public class PlaceServiceImpl implements PlaceService {
     private PlaceDAO placeDAO = new PlaceDAO();
     private PlaceImageDAO imageDAO = new PlaceImageDAO();
     private UserDAO userDAO = new UserDAO();
+    private RatingDAO ratingDAO = new RatingDAO();
 
     @Override
     public List<PlaceDTO> searchPlaces(String keyword) {
@@ -151,5 +156,30 @@ public class PlaceServiceImpl implements PlaceService {
         dto.setPlaceInformation(place.getInformation().getContent());
 
         return dto;
+    }
+
+    @Override
+    public void recalculateAllPlaceRatings() {
+        List<Place> places = placeDAO.getAllPlaces(); // chỉ lấy nơi chưa bị xóa
+
+        for (Place place : places) {
+            List<Rating> ratings = ratingDAO.getRatingsByTarget(place.getPlaceId());
+
+            if (ratings == null || ratings.isEmpty()) {
+                continue;
+            }
+
+            int total = ratings.size();
+            double sum = ratings.stream().mapToInt(Rating::getRating).sum();
+            BigDecimal average = BigDecimal.valueOf(sum / total).setScale(2, RoundingMode.HALF_UP);
+
+            place.setAverageRating(average);
+            place.setTotalRatings(total);
+            place.setUpdatedAt(LocalDateTime.now());
+
+            placeDAO.updatePlace(place);
+        }
+
+        System.out.println("✅ Recalculated all place ratings at " + LocalDateTime.now());
     }
 }

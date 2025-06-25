@@ -365,7 +365,7 @@
             <span>TravelGuide Pro</span>
         </a>
         <div class="navbar-nav ms-auto">
-            <a class="nav-link" href="../logout">
+            <a class="nav-link" href="${pageContext.request.contextPath}/logout">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </a>
         </div>

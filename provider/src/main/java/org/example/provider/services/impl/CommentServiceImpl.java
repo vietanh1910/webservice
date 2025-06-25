@@ -5,6 +5,7 @@ import org.example.provider.entity.Comment;
 import org.example.provider.services.CommentService;
 
 import javax.jws.WebService;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +17,16 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public boolean addComment(int targetId, Comment comment, int userId) {
         try {
+            String text = comment.getCommentText();
+            if (text == null || text.trim().isEmpty()) {
+                System.err.println("Empty comment text");
+                return false;
+            }
+
             comment.setUserId(userId);
             comment.setTargetId(targetId);
+            comment.setCreatedAt(LocalDateTime.now());
+            comment.setUpdatedAt(LocalDateTime.now());
 
             return commentDAO.addComment(comment);
         } catch (Exception e) {
@@ -25,6 +34,7 @@ public class CommentServiceImpl implements CommentService {
             return false;
         }
     }
+
 
     @Override
     public List<Comment> getCommentsByPlace(int placeId) {

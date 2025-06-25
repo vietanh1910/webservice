@@ -5,6 +5,7 @@ import org.example.provider.entity.Rating;
 import org.example.provider.services.RatingService;
 
 import javax.jws.WebService;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,12 +18,15 @@ public class RatingServiceImpl implements RatingService {
     public boolean addRating(int targetId, Rating rating, int userId) {
         try {
             // Validate rating value
-            if (rating.getRating() < 1 || rating.getRating() > 5) {
+            int value = rating.getRating();
+            if (value < 1 || value > 5) {
+                System.err.println("Invalid rating value: " + value);
                 return false;
             }
 
             rating.setUserId(userId);
             rating.setTargetId(targetId);
+            rating.setCreatedAt(LocalDateTime.now());
 
             return ratingDAO.addRating(rating);
         } catch (Exception e) {

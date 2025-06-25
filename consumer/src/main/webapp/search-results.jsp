@@ -96,8 +96,8 @@
                 <a href="home.jsp" class="text-gray-800 hover:text-blue-600 px-3 py-2 font-medium">Home</a>
                 <a href="search" class="text-gray-800 hover:text-blue-600 px-3 py-2 font-medium">Search</a>
                 <c:choose>
-                    <c:when test="${sessionScope.token != null}">
-                        <a href="logout" class="text-gray-800 hover:text-blue-600 px-3 py-2 font-medium">
+                    <c:when test="${sessionScope.user != null and sessionScope.user.role == 2}">
+                        <a href="${pageContext.request.contextPath}/logout" class="text-gray-800 hover:text-blue-600 px-3 py-2 font-medium">
                             <i class="fas fa-sign-out-alt mr-1"></i>Logout
                         </a>
                     </c:when>
@@ -122,7 +122,7 @@
             <a href="home.jsp" class="block px-3 py-2 text-gray-800 hover:text-blue-600 font-medium">Home</a>
             <a href="search" class="block px-3 py-2 text-gray-800 hover:text-blue-600 font-medium">Search</a>
             <c:choose>
-                <c:when test="${sessionScope.token != null}">
+                <c:when test="${sessionScope.user != null and sessionScope.user.role == 2}">
                     <a href="logout" class="block px-3 py-2 text-gray-800 hover:text-blue-600 font-medium">
                         <i class="fas fa-sign-out-alt mr-1"></i>Logout
                     </a>
@@ -167,7 +167,7 @@
 <section class="bg-white py-12 -mt-16 relative z-10">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="search-card rounded-xl shadow-xl p-6 md:p-8">
-            <h2 class="text-2xl font-bold text-gray-800 mb-6">Search Again</h2>
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Search</h2>
             <form action="search" method="GET">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div class="relative md:col-span-2">
@@ -181,18 +181,6 @@
                                    class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                             <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
                         </div>
-                    </div>
-                    <div class="relative">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="category">Category</label>
-                        <select id="category"
-                                name="category"
-                                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <option value="">All Categories</option>
-                            <option value="Tourism" ${category == 'Tourism' ? 'selected' : ''}>Tourism</option>
-                            <option value="Food" ${category == 'Food' ? 'selected' : ''}>Food & Dining</option>
-                            <option value="Entertainment" ${category == 'Entertainment' ? 'selected' : ''}>Entertainment</option>
-                            <option value="Shopping" ${category == 'Shopping' ? 'selected' : ''}>Shopping</option>
-                        </select>
                     </div>
                     <div class="flex items-end">
                         <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300">

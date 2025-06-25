@@ -14,7 +14,7 @@
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
 
         <!-- Show SQL -->
-        <property name="hibernate.show_sql">true</property>
+<!--        <property name="hibernate.show_sql">true</property>-->
         <property name="hibernate.format_sql">true</property>
 
         <!-- Update schema automatically -->

@@ -21,11 +21,6 @@ public class GuideHomeServlet extends HttpServlet {
         HttpSession session = request.getSession();
         UserDTO user = (UserDTO) session.getAttribute("user");
 
-        if (user == null) {
-            response.sendRedirect("/login.jsp");
-            return;
-        }
-
         try {
             // Gọi web service để lấy danh sách địa điểm của guide
             PlaceServiceImplService service = new PlaceServiceImplService();
