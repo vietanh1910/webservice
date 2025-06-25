@@ -58,7 +58,14 @@ public class LoginServlet extends HttpServlet {
         } else {
             HttpSession session = request.getSession();
             session.setAttribute("user", result);
-            response.sendRedirect(request.getContextPath() + "/guide/home");
+            if(result.getRole() == 1) {
+                response.sendRedirect(request.getContextPath() + "/guide/home");
+            } else if (result.getRole() == 2) {
+                response.sendRedirect(request.getContextPath() + "/home");
+            } else {
+                request.setAttribute("error", "Không có quyền truy cập.");
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
+            }
         }
     }
 
