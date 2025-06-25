@@ -33,4 +33,6 @@ public interface PlaceService {
 
     @WebMethod
     List<PlaceDTO> getPlacesByGuide(@WebParam(name = "guideId") int guideId);
+
+    List<PlaceDTO> getPlacesOutStanding();
 }

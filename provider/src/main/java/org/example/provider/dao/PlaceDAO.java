@@ -216,6 +216,48 @@ public class PlaceDAO {
         return result;
     }
 
+    public List<PlaceDTO> getPlacesOutstanding() {
+        List<PlaceDTO> result = new ArrayList<>();
+        Session session = null;
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            String hql = "FROM Place p " +
+                    "WHERE p.isDeleted = false " +
+                    "ORDER BY p.averageRating DESC, p.totalRatings DESC";
+            Query<Place> query = session.createQuery(hql, Place.class);
+            query.setMaxResults(3);
+            List<Place> places = query.getResultList();
+
+            for (Place place : places) {
+                Hibernate.initialize(place.getImages());
+
+                PlaceDTO dto = new PlaceDTO();
+                dto.setId(place.getPlaceId());
+                dto.setPlaceName(place.getPlaceName());
+                dto.setAddress(place.getAddress());
+                dto.setDescription(place.getDescription());
+
+                List<String> urls = place.getImages().stream()
+                        .map(PlaceImage::getImageUrl)
+                        .collect(Collectors.toList());
+                dto.setImageUrls(urls);
+
+                result.add(dto);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+
+        return result;
+    }
+
+
     public List<Place> getAllPlaces() {
         List<Place> places = null;
         Session session = null;

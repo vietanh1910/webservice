@@ -41,14 +41,7 @@
 //            if (imageIdStr != null && !imageIdStr.trim().isEmpty()) {
 //                // Rating cho image
 //                Integer imageId = Integer.parseInt(imageIdStr);
-//                result = ratingService.addRating(placeId, imageId, ratingValue);
-//            } else if (infoIdStr != null && !infoIdStr.trim().isEmpty()) {
-//                // Rating cho info
-//                Long infoId = Long.parseLong(infoIdStr);
-//                result = ratingService.rateInfo(token, infoId, ratingValue);
-//            } else {
-//                // Rating cho place
-//                result = ratingService.ratePlace(token, placeId, ratingValue);
+//                result = ratingService.addRating(placeId, ratingValue, ratingValue);
 //            }
 //
 //            // Thêm comment nếu có

@@ -15,10 +15,18 @@ public class PlaceDetailServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        request.setCharacterEncoding("UTF-8");
+        HttpSession session = request.getSession();
+        UserDTO user = (UserDTO) session.getAttribute("user");
         String placeIdStr = request.getParameter("id");
 
         if (placeIdStr == null || placeIdStr.trim().isEmpty()) {
-            response.sendRedirect("search");
+            response.sendRedirect("/home.jsp");
+            return;
+        }
+
+        if (user == null) {
+            response.sendRedirect("/login.jsp");
             return;
         }
 

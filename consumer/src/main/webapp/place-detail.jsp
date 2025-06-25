@@ -231,6 +231,203 @@
             font-size: 0.9rem;
         }
 
+        /* Reviews Section Styles */
+        .reviews-section {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .reviews-header {
+            background: var(--gradient-bg);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .reviews-summary {
+            background: #f8fafc;
+            padding: 2rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .rating-overview {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .rating-display {
+            text-align: center;
+        }
+
+        .rating-display .rating-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            line-height: 1;
+        }
+
+        .rating-breakdown {
+            flex: 1;
+        }
+
+        .rating-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .star-label {
+            min-width: 60px;
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+        }
+
+        .rating-bar {
+            flex: 1;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .rating-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #fbbf24, #f59e0b);
+            transition: width 0.8s ease;
+        }
+
+        .rating-count {
+            min-width: 40px;
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+        }
+
+        .review-item {
+            padding: 2rem;
+            border-bottom: 1px solid #e2e8f0;
+            transition: background-color 0.3s ease;
+        }
+
+        .review-item:last-child {
+            border-bottom: none;
+        }
+
+        .review-item:hover {
+            background-color: #f8fafc;
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .reviewer-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .reviewer-info {
+            flex: 1;
+        }
+
+        .reviewer-name {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.25rem;
+        }
+
+        .review-date {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+
+        .review-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .review-stars {
+            color: #fbbf24;
+        }
+
+        .review-content {
+            color: #374151;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .review-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .review-action-btn {
+            background: none;
+            border: none;
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .review-action-btn:hover {
+            color: var(--primary-color);
+        }
+
+        .review-action-btn.active {
+            color: var(--primary-color);
+        }
+
+        /* Write Review Section */
+        .write-review-section {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .write-review-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .write-review-header i {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .write-review-header h4 {
+            margin: 0;
+            color: #1e293b;
+        }
+
         /* Button Styles */
         .btn {
             border-radius: 8px;
@@ -306,6 +503,7 @@
             flex-direction: row-reverse;
             justify-content: flex-end;
             gap: 0.25rem;
+            margin-bottom: 1rem;
         }
 
         .rating-stars-input input[type="radio"] {
@@ -364,6 +562,18 @@
             margin-bottom: 1rem;
         }
 
+        .no-reviews {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--secondary-color);
+        }
+
+        .no-reviews i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #cbd5e1;
+        }
+
         /* Animations */
         @keyframes fadeInUp {
             from {
@@ -380,6 +590,21 @@
             animation: fadeInUp 0.6s ease-out;
         }
 
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide-in-right {
+            animation: slideInRight 0.6s ease-out;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .place-title {
@@ -390,7 +615,7 @@
                 padding: 1.5rem;
             }
 
-            .gallery-header {
+            .gallery-header, .reviews-header {
                 padding: 1rem;
             }
 
@@ -400,6 +625,25 @@
 
             .rating-stars-input label {
                 font-size: 2rem;
+            }
+
+            .rating-overview {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .rating-display .rating-number {
+                font-size: 2.5rem;
+            }
+
+            .review-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .review-rating {
+                margin-top: 0.5rem;
             }
         }
 
@@ -418,6 +662,15 @@
         /* Micro-interactions */
         .image-item .btn:hover {
             transform: scale(1.05);
+        }
+
+        .review-item {
+            transform: translateX(0);
+            transition: all 0.3s ease;
+        }
+
+        .review-item:hover {
+            transform: translateX(5px);
         }
     </style>
 </head>
@@ -515,7 +768,7 @@
 
     <div class="row">
         <!-- Images Section -->
-        <div class="col-lg-12">
+        <div class="col-lg-8">
             <c:if test="${not empty images}">
                 <div class="gallery-card fade-in-up">
                     <div class="gallery-header">
@@ -525,7 +778,7 @@
                     <div class="p-4">
                         <div class="row">
                             <c:forEach var="image" items="${images}" varStatus="status">
-                                <div class="col-lg-4 col-md-6">
+                                <div class="col-lg-6 col-md-12">
                                     <div class="image-item">
                                         <img src="${image}" alt="Image ${status.index + 1} of ${place.placeName}">
                                         <div class="image-caption">
@@ -562,211 +815,177 @@
                     <p class="text-muted mb-4">This destination doesn't have any photos yet. Check back later for stunning visuals!</p>
                 </div>
             </c:if>
+        </div>
 
-            <!-- Rate This Place Section -->
+        <!-- Reviews Section -->
+        <div class="col-lg-4">
+            <!-- Write Review Section (for logged in users) -->
             <c:if test="${sessionScope.token != null}">
-                <div class="text-center mt-4 fade-in-up">
-                    <button type="button" class="btn btn-primary btn-lg"
+                <div class="write-review-section fade-in-up slide-in-right">
+                    <div class="write-review-header">
+                        <i class="fas fa-pen"></i>
+                        <h4>Share Your Experience</h4>
+                    </div>
+                    <button type="button" class="btn btn-primary w-100 mb-3"
                             onclick="showRatingModal('place', 0, ${place.id})">
                         <i class="fas fa-star me-2"></i>
-                        Rate This Destination
+                        Write a Review
                     </button>
+                    <p class="text-muted text-center mb-0">
+                        <small>Help other travelers discover this amazing place!</small>
+                    </p>
                 </div>
             </c:if>
+
+            <!-- Login Prompt for non-logged users -->
             <c:if test="${sessionScope.token == null}">
-                <div class="text-center mt-4 fade-in-up">
-                    <p class="text-muted mb-3">Want to share your experience?</p>
-                    <a href="login" class="btn btn-primary btn-lg">
+                <div class="write-review-section fade-in-up slide-in-right">
+                    <div class="write-review-header">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <h4>Join the Community</h4>
+                    </div>
+                    <p class="text-muted mb-3">Want to share your experience and help other travelers?</p>
+                    <a href="login" class="btn btn-primary w-100">
                         <i class="fas fa-sign-in-alt me-2"></i>
-                        Login to Rate & Review
+                        Login to Write Review
                     </a>
                 </div>
             </c:if>
         </div>
     </div>
-</div>
 
-<!-- Rating Modal -->
-<div class="modal fade" id="ratingModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">
-                    <i class="fas fa-star me-2"></i>
-                    Rate Your Experience
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <form action="rating" method="post">
-                <div class="modal-body">
-                    <input type="hidden" name="placeId" value="${place.id}">
-                    <input type="hidden" name="imageId" id="imageId">
-                    <input type="hidden" name="infoId" id="infoId">
-
-                    <div class="mb-4">
-                        <label class="form-label">How would you rate this destination?</label>
-                        <div class="rating-stars-input">
-                            <input type="radio" name="rating" value="5" id="star5">
-                            <label for="star5" class="star">★</label>
-                            <input type="radio" name="rating" value="4" id="star4">
-                            <label for="star4" class="star">★</label>
-                            <input type="radio" name="rating" value="3" id="star3">
-                            <label for="star3" class="star">★</label>
-                            <input type="radio" name="rating" value="2" id="star2">
-                            <label for="star2" class="star">★</label>
-                            <input type="radio" name="rating" value="1" id="star1">
-                            <label for="star1" class="star">★</label>
-                        </div>
-                        <small class="text-muted">Click on the stars to rate</small>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="comment" class="form-label">
-                            <i class="fas fa-comment me-2"></i>
-                            Share your thoughts (optional)
-                        </label>
-                        <textarea class="form-control" name="comment" id="comment" rows="4"
-                                  placeholder="Tell others about your experience at this amazing destination..."></textarea>
-                    </div>
-
-                    <div class="alert alert-info">
-                        <i class="fas fa-info-circle me-2"></i>
-                        <strong>Help other travelers!</strong> Your honest review helps others discover great places and experiences.
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        <i class="fas fa-times me-2"></i>Cancel
-                    </button>
-                    <button type="submit" class="btn btn-success">
-                        <i class="fas fa-paper-plane me-2"></i>Submit Review
-                    </button>
-                </div>
-            </form>
+    <!-- Reviews Section -->
+    <div class="reviews-section fade-in-up">
+        <div class="reviews-header">
+            <i class="fas fa-comments"></i>
+            <h5>Reviews & Ratings</h5>
         </div>
-    </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Reviews Summary -->
+        <c:if test="${place.totalRatings > 0}">
+        <div class="reviews-summary">
+            <div class="rating-overview">
+                <div class="rating-display">
+                    <div class="rating-number">
+                        <fmt:formatNumber value="${place.averageRating}" pattern="0.0"/>
+                    </div>
+                    <div class="rating-stars mb-2">
+                        <c:forEach begin="1" end="5" var="star">
+                            <c:choose>
+                                <c:when test="${star <= place.averageRating}">
+                                    <i class="fas fa-star" style="color: #fbbf24;"></i>
+                                </c:when>
+                                <c:otherwise>
+                                    <i class="far fa-star" style="color: #fbbf24;"></i>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </div>
+                    <div class="text-muted">
+                        Based on ${place.totalRatings} reviews
+                    </div>
+                </div>
+                <div class="rating-breakdown">
+                    <!-- Simulated rating breakdown - you can replace with actual data -->
+                    <div class="rating-row">
+                        <span class="star-label">5 stars</span>
+                        <div class="rating-bar">
+                            <div class="rating-fill" style="width: 60%;"></div>
+                        </div>
+                        <span class="rating-count">12</span>
+                    </div>
+                    <div class="rating-row">
+                        <span class="star-label">4 stars</span>
+                        <div class="rating-bar">
+                            <div class="rating-fill" style="width: 25%;"></div>
+                        </div>
+                        <span class="rating-count">5</span>
+                    </div>
+                    <div class="rating-row">
+                        <span class="star-label">3 stars</span>
+                        <div class="rating-bar">
+                            <div class="rating-fill" style="width: 10%;"></div>
+                        </div>
+                        <span class="rating-count">2</span>
+                    </div>
+                    <div class="rating-row">
+                        <span class="star-label">2 stars</span>
+                        <div class="rating-bar">
+                            <div class="rating-fill" style="width: 3%;"></div>
+                            </div>
+                                                    <span class="rating-count">1</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </c:if>
 
-<script>
-    function showRatingModal(type, id, placeId) {
-        // Reset form
-        document.getElementById('imageId').value = '';
-        document.getElementById('infoId').value = '';
+                                    <!-- No Reviews State -->
+                                    <c:if test="${place.totalRatings == 0}">
+                                        <div class="no-reviews fade-in-up">
+                                            <i class="fas fa-comments fa-5x"></i>
+                                            <h4>No Reviews Yet</h4>
+                                            <p class="text-muted mb-4">Be the first to share your experience about this destination!</p>
+                                        </div>
+                                    </c:if>
 
-        // Reset radio buttons
-        const radioButtons = document.querySelectorAll('input[name="rating"]');
-        radioButtons.forEach(radio => radio.checked = false);
+                                    <!-- Reviews List -->
+                                    <c:if test="${not empty reviews}">
+                                        <div class="p-4">
+                                            <c:forEach var="review" items="${reviews}">
+                                                <div class="review-item fade-in-up">
+                                                    <div class="review-header">
+                                                        <div class="reviewer-avatar">
+                                                            <c:choose>
+                                                                <c:when test="${not empty review.userAvatar}">
+                                                                    <img src="${review.userAvatar}" alt="${review.userName}" class="img-fluid rounded-circle">
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <span>${review.userName.substring(0, 1)}</span>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </div>
+                                                        <div class="reviewer-info">
+                                                            <div class="reviewer-name">${review.userName}</div>
+                                                            <div class="review-date">
+                                                                <fmt:formatDate value="${review.date}" pattern="MMM dd, yyyy"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="review-rating">
+                                                            <c:forEach begin="1" end="5" var="star">
+                                                                <c:choose>
+                                                                    <c:when test="${star <= review.rating}">
+                                                                        <i class="fas fa-star"></i>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <i class="far fa-star"></i>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </c:forEach>
+                                                        </div>
+                                                    </div>
+                                                    <div class="review-content">${review.content}</div>
+                                                </div>
+                                            </c:forEach>
+                                        </div>
+                                    </c:if>
+                                </div>
+                            </div>
 
-        // Reset comment
-        document.getElementById('comment').value = '';
+                            <!-- Footer -->
+                            <footer class="mt-5">
+                                <div class="text-center py-4">
+                                    <p>&copy; 2023 TravelGuide Pro. All rights reserved.</p>
+                                </div>
+                            </footer>
 
-        // Set appropriate ID based on type
-        if (type === 'image') {
-            document.getElementById('imageId').value = id;
-            document.querySelector('.modal-title').innerHTML = '<i class="fas fa-camera me-2"></i>Rate This Photo';
-        } else if (type === 'info') {
-            document.getElementById('infoId').value = id;
-        } else {
-            document.querySelector('.modal-title').innerHTML = '<i class="fas fa-star me-2"></i>Rate Your Experience';
-        }
-
-        // Show modal
-        var modal = new bootstrap.Modal(document.getElementById('ratingModal'));
-        modal.show();
-    }
-
-    // Add smooth scroll behavior
-    document.documentElement.style.scrollBehavior = 'smooth';
-
-    // Add loading state simulation for images
-    document.addEventListener('DOMContentLoaded', function() {
-        const images = document.querySelectorAll('.image-item img');
-        images.forEach((img, index) => {
-            img.addEventListener('load', function() {
-                this.style.opacity = '0';
-                this.style.transition = 'opacity 0.5s ease';
-                setTimeout(() => {
-                    this.style.opacity = '1';
-                }, index * 100); // Stagger the loading animation
-            });
-        });
-
-        // Add intersection observer for fade-in animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe fade-in elements
-        document.querySelectorAll('.fade-in-up').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
-        });
-    });
-
-    // Add hover effects for image items
-    document.querySelectorAll('.image-item').forEach(item => {
-        item.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-8px) scale(1.02)';
-        });
-
-        item.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
-        });
-    });
-
-    // Enhanced star rating interaction
-    document.querySelectorAll('.rating-stars-input label').forEach(label => {
-        label.addEventListener('mouseenter', function() {
-            const value = this.getAttribute('for').replace('star', '');
-            const allLabels = document.querySelectorAll('.rating-stars-input label');
-            allLabels.forEach((l, index) => {
-                if (index >= (5 - value)) {
-                    l.style.color = '#fbbf24';
-                    l.style.transform = 'scale(1.1)';
-                } else {
-                    l.style.color = '#e5e7eb';
-                    l.style.transform = 'scale(1)';
-                }
-            });
-        });
-    });
-
-    document.querySelector('.rating-stars-input').addEventListener('mouseleave', function() {
-        const checkedInput = document.querySelector('input[name="rating"]:checked');
-        const allLabels = document.querySelectorAll('.rating-stars-input label');
-
-        if (checkedInput) {
-            const checkedValue = checkedInput.value;
-            allLabels.forEach((l, index) => {
-                if (index >= (5 - checkedValue)) {
-                    l.style.color = '#fbbf24';
-                    l.style.transform = 'scale(1)';
-                } else {
-                    l.style.color = '#e5e7eb';
-                    l.style.transform = 'scale(1)';
-                }
-            });
-        } else {
-            allLabels.forEach(l => {
-                l.style.color = '#e5e7eb';
-                l.style.transform = 'scale(1)';
-            });
-        }
-    });
-</script>
-</body>
-</html>
+                            <!-- Scripts -->
+                            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+                            <script>
+                                function showRatingModal(type, index, placeId) {
+                                    // Logic for showing rating modal
+                                    console.log(`Show rating modal for ${type}, index: ${index}, placeId: ${placeId}`);
+                                }
+                            </script>
+                            </body>
+                            </html>

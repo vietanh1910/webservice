@@ -118,6 +118,16 @@ public class PlaceServiceImpl implements PlaceService {
         }
     }
 
+    @Override
+    public List<PlaceDTO> getPlacesOutStanding() {
+        try {
+            return placeDAO.getPlacesOutstanding();
+        } catch (Exception e) {
+            System.err.println("Database error in getPlacesByGuide: " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
     public static PlaceDTO toDTO(Place place) {
         if (place == null) return null;
 
